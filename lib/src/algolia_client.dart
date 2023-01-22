@@ -1,12 +1,10 @@
 import 'package:algolia_lite/src/configuration.dart';
-import 'package:algolia_lite/src/http/requester.dart';
 import 'package:algolia_lite/src/http/transport.dart';
 
 class SearchClient {
-  SearchClient(SearchConfig config)
-      : transport = Transport(HttpRequester(), config);
+  SearchClient(SearchConfig config) : transport = HttpTransport(config);
 
-  final Transport transport;
+  final HttpTransport transport;
 
   Future<Map> search(String indexName, String query) {
     return transport.request(

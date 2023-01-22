@@ -16,15 +16,8 @@ abstract class HttpRequester {
 }
 
 /// Implementation of [HttpRequester].
-class _HttpRequester extends http.BaseClient implements HttpRequester {
-  final userAgent = "algolia lite (0.0.1)";
+class _HttpRequester implements HttpRequester {
   final _client = http.Client();
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers['User-Agent'] = userAgent;
-    return _client.send(request);
-  }
 
   @override
   Future<HttpResponse> perform(HttpRequest request) async {
@@ -38,41 +31,46 @@ class _HttpRequester extends http.BaseClient implements HttpRequester {
   }
 
   http.Request _buildRequest(HttpRequest request) {
-    final url = request.url.startsWith('https://')
-        ? request.url
-        : 'https://${request.url}';
-    final uri = Uri.parse(url);
+    final uri = _buildUri(request);
     final httpRequest = http.Request(request.method, uri);
     if (request.headers != null) httpRequest.headers.addAll(request.headers!);
     if (request.body != null) httpRequest.body = request.body!;
     return httpRequest;
   }
 
+  Uri _buildUri(HttpRequest request) => Uri(
+        scheme: 'https',
+        host: request.host,
+        path: request.path,
+        queryParameters: request.queryParameters,
+      );
+
   @override
-  void close() {
-    _client.close();
-  }
+  void close() => _client.close();
 }
 
 /// Represents an Http request.
 class HttpRequest {
-  HttpRequest(this.method, this.url, this.timeout, this.headers, this.body);
+  HttpRequest(
+      {required this.method,
+      required this.host,
+      required this.path,
+      required this.timeout,
+      this.headers,
+      this.body,
+      required this.queryParameters});
 
   final String method;
-  final String url;
+  final String host;
+  final String path;
   final Duration timeout;
   final Map<String, String>? headers;
   final String? body;
+  final Map<String, String> queryParameters;
 
   @override
-  String toString() {
-    return 'HttpRequest{method: $method, '
-        'url: $url, '
-        'timeout: $timeout, '
-        'headers: $headers, '
-        'body: $body'
-        '}';
-  }
+  String toString() =>
+      'HttpRequest{method: $method, host: $host, timeout: $timeout, headers: $headers, body: $body, queryParams: $queryParameters}';
 }
 
 class HttpResponse {

@@ -23,8 +23,6 @@ class StatefulHost {
     lastUpdate = DateTime.now();
   }
 
-  String withPath(String path) => '$url$path';
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -43,18 +41,3 @@ class StatefulHost {
   String toString() =>
       'StatefulHost{url: $url, isUp: $isUp, lastUpdate: $lastUpdate, retryCount: $retryCount}';
 }
-
-List<StatefulHost> searchHostsOfApp(String appID) {
-  return [
-    StatefulHost('$appID-dsn.algolia.net'),
-    StatefulHost('$appID.algolia.net'),
-    ...([
-      StatefulHost('$appID-1.algolianet.com'),
-      StatefulHost('$appID-2.algolianet.com'),
-      StatefulHost('$appID-3.algolianet.com'),
-    ]..shuffle()),
-  ];
-}
-
-List<StatefulHost> customSearchHostsOf(List<String> hosts) =>
-    hosts.map((host) => StatefulHost(host)).toList();

@@ -9,7 +9,7 @@ class AlgoliaClientException implements AlgoliaException {}
 
 /// Exception thrown in case of API failure.
 class AlgoliaApiException implements AlgoliaException {
-  AlgoliaApiException(this.httpStatusCode, this.message);
+  const AlgoliaApiException(this.httpStatusCode, this.message);
 
   final String message;
   final int httpStatusCode;
@@ -22,7 +22,7 @@ class AlgoliaApiException implements AlgoliaException {
 
 /// Exception thrown when all hosts are unreachable.
 class UnreachableHostsException implements AlgoliaException {
-  UnreachableHostsException(this.errors);
+  const UnreachableHostsException(this.errors);
 
   /// List of thrown errors
   final List errors;

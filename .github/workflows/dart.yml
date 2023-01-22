@@ -1,163 +1,63 @@
-# Created with package:mono_repo v6.4.0
-name: Dart CI
+name: Build
+
 on:
+  # Run on PRs and pushes to the default branch.
   push:
-    branches:
-      - main
-      - master
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
   schedule:
     - cron: "0 0 * * 0"
-defaults:
-  run:
-    shell: bash
+
 env:
   PUB_ENVIRONMENT: bot.github
-permissions: read-all
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  job_001:
-    name: mono_repo self validate
+  analyze:
     runs-on: ubuntu-latest
     steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:stable"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@6a218f2413a3e78e9087f638a238f6b40893203d
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.0
         with:
           sdk: stable
-      - id: checkout
-        name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-      - name: mono_repo self validate
-        run: dart pub global activate mono_repo 6.4.0
-      - name: mono_repo self validate
-        run: dart pub global run mono_repo generate --validate
-  job_002:
-    name: "analyze_and_format; PKGS: algolia_lite, algolia_lite_core; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+        if: always() && steps.install.outcome == 'success'
+      - name: Analyze code
+        run: dart analyze --fatal-infos
+        if: always() && steps.install.outcome == 'success'
+
+  test-native:
+    needs: analyze
     runs-on: ubuntu-latest
     steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:stable;packages:algolia_lite-algolia_lite_core;commands:format-analyze"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:stable;packages:algolia_lite-algolia_lite_core
-            os:ubuntu-latest;pub-cache-hosted;sdk:stable
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@6a218f2413a3e78e9087f638a238f6b40893203d
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.0
         with:
           sdk: stable
-      - id: checkout
-        name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-      - id: algolia_lite_pub_upgrade
-        name: algolia_lite; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: algolia_lite
-      - name: "algolia_lite; dart format --output=none --set-exit-if-changed ."
-        run: "dart format --output=none --set-exit-if-changed ."
-        if: "always() && steps.algolia_lite_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite
-      - name: "algolia_lite; dart analyze --fatal-infos ."
-        run: dart analyze --fatal-infos .
-        if: "always() && steps.algolia_lite_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite
-      - id: algolia_lite_core_pub_upgrade
-        name: algolia_lite_core; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: algolia_lite_core
-      - name: "algolia_lite_core; dart format --output=none --set-exit-if-changed ."
-        run: "dart format --output=none --set-exit-if-changed ."
-        if: "always() && steps.algolia_lite_core_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite_core
-      - name: "algolia_lite_core; dart analyze --fatal-infos ."
-        run: dart analyze --fatal-infos .
-        if: "always() && steps.algolia_lite_core_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite_core
-  job_003:
-    name: "unit_test; PKGS: algolia_lite, algolia_lite_core; `dart test`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:stable;packages:algolia_lite-algolia_lite_core;commands:test_0"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:stable;packages:algolia_lite-algolia_lite_core
-            os:ubuntu-latest;pub-cache-hosted;sdk:stable
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@6a218f2413a3e78e9087f638a238f6b40893203d
-        with:
-          sdk: stable
-      - id: checkout
-        name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-      - id: algolia_lite_pub_upgrade
-        name: algolia_lite; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: algolia_lite
-      - name: algolia_lite; dart test
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Run tests
         run: dart test
-        if: "always() && steps.algolia_lite_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite
-      - id: algolia_lite_core_pub_upgrade
-        name: algolia_lite_core; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: algolia_lite_core
-      - name: algolia_lite_core; dart test
-        run: dart test
-        if: "always() && steps.algolia_lite_core_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite_core
-    needs:
-      - job_001
-      - job_002
-  job_004:
-    name: "unit_test; PKG: algolia_lite_core; `dart test -p chrome`"
+
+  test-js:
+    needs: analyze
     runs-on: ubuntu-latest
     steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:stable;packages:algolia_lite_core;commands:test_1"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:stable;packages:algolia_lite_core
-            os:ubuntu-latest;pub-cache-hosted;sdk:stable
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@6a218f2413a3e78e9087f638a238f6b40893203d
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.0
         with:
           sdk: stable
-      - id: checkout
-        name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-      - id: algolia_lite_core_pub_upgrade
-        name: algolia_lite_core; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: algolia_lite_core
-      - name: "algolia_lite_core; dart test -p chrome"
-        run: dart test -p chrome
-        if: "always() && steps.algolia_lite_core_pub_upgrade.conclusion == 'success'"
-        working-directory: algolia_lite_core
-    needs:
-      - job_001
-      - job_002
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Run tests
+        run: dart test

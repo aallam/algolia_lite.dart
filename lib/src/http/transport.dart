@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import '../configuration.dart';
 import '../exception.dart';
 import '../request_options.dart';
+import 'configuration.dart';
 import 'decoder.dart';
 import 'hosts.dart';
 import 'requester.dart';
@@ -12,13 +12,13 @@ import 'requester.dart';
 abstract class HttpTransport {
   /// Create [HttpTransport] instance.
   factory HttpTransport.create(
-    SearchConfig config,
+    Configuration config,
     HttpRequester requester,
   ) =>
       _HttpTransport(requester, config);
 
   factory HttpTransport(
-    SearchConfig config,
+    Configuration config,
   ) =>
       _HttpTransport(HttpRequester(), config);
 
@@ -39,7 +39,7 @@ class _HttpTransport implements HttpTransport {
             : _customSearchHostsOf(config.hosts!);
 
   final HttpRequester requester;
-  final SearchConfig config;
+  final Configuration config;
   final List<StatefulHost> hosts;
 
   @override

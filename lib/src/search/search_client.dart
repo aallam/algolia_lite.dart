@@ -29,6 +29,11 @@ abstract class SearchClient {
   /// Search for values of a given facet, optionally restricting the returned
   /// values to those contained in objects matching other search criteria.
   Future<Map> facetSearch(FacetSearchRequest request);
+
+  /// Retrieve all objects from an index, for example, as a backup, for SEO, or
+  /// for analytics. Each API request retrieves up to 1,000 objects and supports
+  /// filters and full-text search via [request.params].
+  Future<Map> browse(SearchRequest request, [String? cursor]);
 }
 
 class _SearchClient implements SearchClient {
@@ -62,6 +67,15 @@ class _SearchClient implements SearchClient {
         '/1/indexes/${request.indexName}/facets/${request.facetName}/query',
       ),
       body: request.encode(),
+    );
+  }
+
+  @override
+  Future<Map> browse(SearchRequest request, [String? cursor]) {
+    return transport.request(
+      method: 'POST',
+      path: encodePath('/1/indexes/${request.indexName}/browse'),
+      body: request.encode(cursor),
     );
   }
 }

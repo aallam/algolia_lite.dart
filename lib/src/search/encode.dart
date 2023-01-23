@@ -8,9 +8,12 @@ String encodePath(String path) => Uri(path: path).path;
 extension SearchRequestEncode on SearchRequest {
   String encodedParams() => Uri(queryParameters: params).query;
 
-  String encode() {
+  String encode([String? cursor]) {
     final encoded = encodedParams();
-    final data = {'params': encoded};
+    final data = {
+      'params': encoded,
+      if (cursor != null) 'cursor': cursor,
+    };
     return jsonEncode(data);
   }
 }

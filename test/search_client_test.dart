@@ -12,7 +12,7 @@ void main() {
       params: {'query': 'a'},
     );
     final res = await client.search(req);
-    print(res);
+    expect(res.isNotEmpty, true);
   });
 
   test('MultiSearch', () async {
@@ -27,7 +27,7 @@ void main() {
       )
     ]);
     final res = await client.multiSearch(req);
-    print(res);
+    expect(res.isNotEmpty, true);
   });
 
   test('FacetSearch', () async {
@@ -41,6 +41,18 @@ void main() {
       facetQuery: 'a',
     );
     final res = await client.facetSearch(req);
-    print(res);
+    expect(res.isNotEmpty, true);
+  });
+
+  test('Browse', () async {
+    final client = SearchClient.create(
+      applicationID: 'latency',
+      apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
+    );
+    final req = SearchRequest(indexName: 'instant_search');
+    final res = await client.browse(req);
+    expect(res['page'], 0);
+    final res2 = await client.browse(req, res['cursor']);
+    expect(res2['page'], 1);
   });
 }

@@ -3,11 +3,11 @@ import 'package:test/test.dart';
 
 void main() {
   test('Search', () async {
-    final client = SearchClient.create(
+    final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = SearchRequest(
+    final req = SearchRequest.create(
       indexName: 'instant_search',
       params: {'query': 'a'},
     );
@@ -16,12 +16,12 @@ void main() {
   });
 
   test('MultiSearch', () async {
-    final client = SearchClient.create(
+    final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
     final req = MultiSearchRequest(requests: [
-      SearchRequest(
+      SearchRequest.create(
         indexName: 'instant_search',
         params: {'query': 'a'},
       )
@@ -31,7 +31,7 @@ void main() {
   });
 
   test('FacetSearch', () async {
-    final client = SearchClient.create(
+    final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
@@ -45,11 +45,11 @@ void main() {
   });
 
   test('Browse All', () async {
-    final client = SearchClient.create(
+    final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = SearchRequest(indexName: 'instant_search');
+    final req = SearchRequest('instant_search');
     final stream = client.browse(req);
     expect(stream, emitsInOrder([mayEmitMultiple(anything), emitsDone]));
   });

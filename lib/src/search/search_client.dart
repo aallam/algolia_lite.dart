@@ -11,16 +11,16 @@ import 'search_response.dart';
 @sealed
 abstract class SearchClient {
   /// Create a [SearchClient] instance.
-  factory SearchClient(SearchConfig config) => _SearchClient(config);
-
-  /// Create a [SearchClient] instance.
-  factory SearchClient.create({
+  factory SearchClient({
     required String applicationID,
     required String apiKey,
   }) =>
-      _SearchClient(
+      SearchClient.create(
         SearchConfig(applicationID: applicationID, apiKey: apiKey),
       );
+
+  /// Create a [SearchClient] instance.
+  factory SearchClient.create(SearchConfig config) => _SearchClient(config);
 
   /// Method to query an index.
   Future<SearchResponse> search(SearchRequest request);

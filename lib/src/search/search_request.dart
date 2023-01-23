@@ -1,20 +1,26 @@
+import 'package:collection/collection.dart';
+
 /// Represents a search request.
-class SearchRequest {
+class SearchRequest extends DelegatingMap<String, dynamic> {
   /// The index to query.
   final String indexName;
 
   /// [Search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/).
-  final Map<String, dynamic>? params;
+  final Map<String, dynamic> params;
 
   /// Create a [SearchRequest] instance.
-  SearchRequest({
+  SearchRequest(String indexName)
+      : this.create(indexName: indexName, params: {});
+
+  /// Create a [SearchRequest] instance.
+  SearchRequest.create({
     required this.indexName,
-    this.params,
-  });
+    required this.params,
+  }) : super(params);
 }
 
 /// Represents a multi search request.
-class MultiSearchRequest {
+class MultiSearchRequest extends DelegatingList<SearchRequest> {
   /// A list of search requests.
   final List<SearchRequest> requests;
 
@@ -26,11 +32,11 @@ class MultiSearchRequest {
   MultiSearchRequest({
     required this.requests,
     this.strategy = 'none',
-  });
+  }) : super(requests);
 }
 
 /// Represents a facet search request.
-class FacetSearchRequest {
+class FacetSearchRequest extends DelegatingMap<String, dynamic> {
   /// The index to query.
   final String indexName;
 
@@ -38,7 +44,7 @@ class FacetSearchRequest {
   final String facetName;
 
   /// [Search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/).
-  final Map<String, dynamic>? params;
+  final Map<String, dynamic> params;
 
   /// Text to search inside the facet’s values.
   final String? facetQuery;
@@ -47,10 +53,26 @@ class FacetSearchRequest {
   final int? maxFacetHits;
 
   /// Create a [FacetSearchRequest] instance.
-  FacetSearchRequest(
-      {required this.indexName,
-      required this.facetName,
-      this.params,
-      this.facetQuery,
-      this.maxFacetHits});
+  FacetSearchRequest({
+    required String indexName,
+    required String facetName,
+    Map<String, dynamic>? params,
+    String? facetQuery,
+    int? maxFacetHits,
+  }) : this.create(
+          indexName: indexName,
+          facetName: facetName,
+          params: params ?? {},
+          facetQuery: facetQuery,
+          maxFacetHits: maxFacetHits,
+        );
+
+  /// Create a [FacetSearchRequest] instance.
+  FacetSearchRequest.create({
+    required this.indexName,
+    required this.facetName,
+    required this.params,
+    this.facetQuery,
+    this.maxFacetHits,
+  }) : super(params);
 }

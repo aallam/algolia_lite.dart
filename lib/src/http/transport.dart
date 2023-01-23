@@ -24,7 +24,7 @@ abstract class HttpTransport {
       _HttpTransport(HttpRequester(), config);
 
   /// Run an request and get a response.
-  Future<Map> request({
+  Future<Map<String, dynamic>> request({
     required String method,
     required String path,
     RequestOptions? requestOptions,
@@ -44,7 +44,7 @@ class _HttpTransport implements HttpTransport {
   final Iterable<StatefulHost> hosts;
 
   @override
-  Future<Map> request({
+  Future<Map<String, dynamic>> request({
     required String method,
     required String path,
     RequestOptions? requestOptions,

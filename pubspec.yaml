@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.18.2 <3.0.0'
 
 dependencies:
+  collection: ^1.17.0
   compute: ^1.0.2
   http: ^0.13.5
   meta: ^1.8.0

@@ -5,6 +5,7 @@ import 'package:algolia_lite/src/search/encode.dart';
 import 'package:meta/meta.dart';
 
 import '../http/transport.dart';
+import 'search_response.dart';
 
 /// Client for search endpoints.
 @sealed
@@ -22,20 +23,20 @@ abstract class SearchClient {
       );
 
   /// Method to query an index.
-  Future<Map> search(SearchRequest request);
+  Future<SearchResponse> search(SearchRequest request);
 
   /// Send multiple search queries, potentially targeting multiple indices,
   /// in a single API call.
-  Future<Map> multiSearch(MultiSearchRequest request);
+  Future<MultiSearchResponse> multiSearch(MultiSearchRequest request);
 
   /// Search for values of a given facet, optionally restricting the returned
   /// values to those contained in objects matching other search criteria.
-  Future<Map> facetsSearch(FacetSearchRequest request);
+  Future<FacetSearchResponse> facetsSearch(FacetSearchRequest request);
 
   /// Retrieve all objects from an index, for example, as a backup, for SEO, or
   /// for analytics. Each API request retrieves up to 1,000 objects and supports
   /// filters and full-text search via [request.params].
-  Stream<Map> browse(SearchRequest request);
+  Stream<BrowseResponse> browse(SearchRequest request);
 }
 
 class _SearchClient implements SearchClient {
@@ -44,46 +45,49 @@ class _SearchClient implements SearchClient {
   final HttpTransport transport;
 
   @override
-  Future<Map> search(SearchRequest request) {
-    return transport.request(
+  Future<SearchResponse> search(SearchRequest request) async {
+    final json = await transport.request(
       method: 'POST',
       path: encodePath('/1/indexes/${request.indexName}/query'),
       body: request.encode(),
     );
+    return SearchResponse(json);
   }
 
   @override
-  Future<Map> multiSearch(MultiSearchRequest request) {
-    return transport.request(
+  Future<MultiSearchResponse> multiSearch(MultiSearchRequest request) async {
+    final json = await transport.request(
       method: 'POST',
       path: '/1/indexes/*/queries',
       body: request.encode(),
     );
+    return MultiSearchResponse(json);
   }
 
   @override
-  Future<Map> facetsSearch(FacetSearchRequest request) {
-    return transport.request(
+  Future<FacetSearchResponse> facetsSearch(FacetSearchRequest request) async {
+    final json = await transport.request(
       method: 'POST',
       path: encodePath(
         '/1/indexes/${request.indexName}/facets/${request.facetName}/query',
       ),
       body: request.encode(),
     );
+    return FacetSearchResponse(json);
   }
 
   @override
-  Stream<Map> browse(SearchRequest request) async* {
+  Stream<BrowseResponse> browse(SearchRequest request) async* {
     final path = encodePath('/1/indexes/${request.indexName}/browse');
     String? cursor;
     while (true) {
-      final res = await transport.request(
+      final json = await transport.request(
         method: 'POST',
         path: path,
         body: request.encode(cursor),
       );
-      yield res;
-      cursor = res['cursor'];
+      yield BrowseResponse(json);
+      cursor = json['cursor'];
       if (cursor == null) break;
     }
   }

@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'search_request.dart';
 
+/// URL encode [path] string.
+String encodePath(String path) => Uri(path: path).path;
+
 extension SearchRequestEncode on SearchRequest {
   String encodedParams() => Uri(queryParameters: params).query;
 
@@ -22,6 +25,17 @@ extension MultiSearchRequestEncode on MultiSearchRequest {
               })
           .toList(),
       'strategy': strategy
+    };
+    return jsonEncode(data);
+  }
+}
+
+extension FacetSearchRequestEncode on FacetSearchRequest {
+  String encode() {
+    final data = {
+      'params': Uri(queryParameters: params).query,
+      if (facetQuery != null) 'facetQuery': facetQuery,
+      if (maxFacetHits != null) 'maxFacetHits': maxFacetHits,
     };
     return jsonEncode(data);
   }

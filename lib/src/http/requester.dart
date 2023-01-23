@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 import '../exception.dart';
+import '../host.dart';
 
 /// This contract allows you to run http requests and get response.
 abstract class HttpRequester {
@@ -39,8 +40,8 @@ class _HttpRequester implements HttpRequester {
   }
 
   Uri _buildUri(HttpRequest request) => Uri(
-        scheme: 'https',
-        host: request.host,
+        scheme: request.host.scheme,
+        host: request.host.url,
         path: request.path,
         queryParameters: request.queryParameters,
       );
@@ -61,7 +62,7 @@ class HttpRequest {
       required this.queryParameters});
 
   final String method;
-  final String host;
+  final Host host;
   final String path;
   final Duration timeout;
   final Map<String, String>? headers;

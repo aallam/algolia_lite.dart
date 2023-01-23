@@ -1,3 +1,5 @@
+import '../host.dart';
+
 /// Configuration used by a client.
 abstract class Configuration {
   /// Application to target. Is passed as a HTTP header.
@@ -7,7 +9,7 @@ abstract class Configuration {
   String get apiKey;
 
   /// List of hosts and back-up host used to perform a custom retry logic.
-  List<String>? get hosts;
+  List<Host>? get hosts;
 
   /// Default headers that should be applied to every request.
   Map<String, String>? get headers;

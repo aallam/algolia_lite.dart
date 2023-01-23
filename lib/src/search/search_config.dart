@@ -1,12 +1,14 @@
 import 'package:algolia_lite/src/http/configuration.dart';
 
+import '../host.dart';
+
 class SearchConfig implements Configuration {
   @override
   final String applicationID;
   @override
   final String apiKey;
   @override
-  final List<String>? hosts;
+  final List<Host>? hosts;
   @override
   final Map<String, String>? headers;
   @override

@@ -1,9 +1,9 @@
-import 'package:algolia_lite/src/http/hosts.dart';
+import 'package:algolia_lite/src/http/stateful_host.dart';
 import 'package:test/test.dart';
 
 void main() {
   test('Reset', () {
-    final host = StatefulHost("url")
+    final host = StatefulHost.create('url')
       ..isUp = false
       ..retryCount = 1;
     host.reset();
@@ -12,7 +12,7 @@ void main() {
   });
 
   test('Timed out', () {
-    final host = StatefulHost("url")
+    final host = StatefulHost.create('url')
       ..isUp = false
       ..retryCount = 0;
     host.timedOut();
@@ -21,7 +21,7 @@ void main() {
   });
 
   test('Failed', () {
-    final host = StatefulHost("url")
+    final host = StatefulHost.create('url')
       ..isUp = true
       ..retryCount = 1;
     host.failed();

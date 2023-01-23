@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import '../exception.dart';
+import '../host.dart';
 import '../request_options.dart';
 import 'configuration.dart';
 import 'decoder.dart';
-import 'hosts.dart';
 import 'requester.dart';
+import 'stateful_host.dart';
 
 /// Component to run http requests with retry logic.
 abstract class HttpTransport {
@@ -40,7 +41,7 @@ class _HttpTransport implements HttpTransport {
 
   final HttpRequester requester;
   final Configuration config;
-  final List<StatefulHost> hosts;
+  final Iterable<StatefulHost> hosts;
 
   @override
   Future<Map> request({
@@ -108,7 +109,7 @@ class _HttpTransport implements HttpTransport {
     final timeout = baseTimeout * (host.retryCount + 1);
     return HttpRequest(
       method: method,
-      host: host.url,
+      host: host.host,
       path: path,
       timeout: timeout,
       headers: headers,
@@ -128,17 +129,17 @@ class _HttpTransport implements HttpTransport {
   void dispose() => requester.close();
 }
 
-List<StatefulHost> _searchHostsOfApp(String appID) {
+Iterable<StatefulHost> _searchHostsOfApp(String appID) {
   return [
-    StatefulHost('$appID-dsn.algolia.net'),
-    StatefulHost('$appID.algolia.net'),
+    StatefulHost.create('$appID-dsn.algolia.net'),
+    StatefulHost.create('$appID.algolia.net'),
     ...([
-      StatefulHost('$appID-1.algolianet.com'),
-      StatefulHost('$appID-2.algolianet.com'),
-      StatefulHost('$appID-3.algolianet.com'),
+      StatefulHost.create('$appID-1.algolianet.com'),
+      StatefulHost.create('$appID-2.algolianet.com'),
+      StatefulHost.create('$appID-3.algolianet.com'),
     ]..shuffle()),
   ];
 }
 
-List<StatefulHost> _customSearchHostsOf(List<String> hosts) =>
+List<StatefulHost> _customSearchHostsOf(List<Host> hosts) =>
     hosts.map((host) => StatefulHost(host)).toList();

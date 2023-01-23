@@ -1,7 +1,12 @@
-class StatefulHost {
-  StatefulHost(this.url);
+import '../host.dart';
 
-  final String url;
+class StatefulHost {
+  StatefulHost(this.host);
+
+  StatefulHost.create(String url, {String scheme = 'https'})
+      : host = Host(url, scheme: scheme);
+
+  final Host host;
   var isUp = true;
   var retryCount = 0;
   var lastUpdate = DateTime.now();
@@ -28,16 +33,16 @@ class StatefulHost {
       identical(this, other) ||
       other is StatefulHost &&
           runtimeType == other.runtimeType &&
-          url == other.url &&
+          host == other.host &&
           isUp == other.isUp &&
           lastUpdate == other.lastUpdate &&
           retryCount == other.retryCount;
 
   @override
   int get hashCode =>
-      url.hashCode ^ isUp.hashCode ^ lastUpdate.hashCode ^ retryCount.hashCode;
+      host.hashCode ^ isUp.hashCode ^ lastUpdate.hashCode ^ retryCount.hashCode;
 
   @override
   String toString() =>
-      'StatefulHost{url: $url, isUp: $isUp, lastUpdate: $lastUpdate, retryCount: $retryCount}';
+      'StatefulHost{host: $host, isUp: $isUp, lastUpdate: $lastUpdate, retryCount: $retryCount}';
 }

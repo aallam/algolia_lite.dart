@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:algolia_lite/algolia_lite.dart';
 import 'package:algolia_lite/src/search/encode.dart';
 import 'package:meta/meta.dart';
@@ -19,7 +21,7 @@ abstract class SearchClient {
         SearchConfig(applicationID: applicationID, apiKey: apiKey),
       );
 
-  /// Return objects that match the query.
+  /// Method to query an index.
   Future<Map> search(SearchRequest request);
 
   /// Send multiple search queries, potentially targeting multiple indices,
@@ -28,12 +30,12 @@ abstract class SearchClient {
 
   /// Search for values of a given facet, optionally restricting the returned
   /// values to those contained in objects matching other search criteria.
-  Future<Map> facetSearch(FacetSearchRequest request);
+  Future<Map> facetsSearch(FacetSearchRequest request);
 
   /// Retrieve all objects from an index, for example, as a backup, for SEO, or
   /// for analytics. Each API request retrieves up to 1,000 objects and supports
   /// filters and full-text search via [request.params].
-  Future<Map> browse(SearchRequest request, [String? cursor]);
+  Stream<Map> browse(SearchRequest request);
 }
 
 class _SearchClient implements SearchClient {
@@ -60,7 +62,7 @@ class _SearchClient implements SearchClient {
   }
 
   @override
-  Future<Map> facetSearch(FacetSearchRequest request) {
+  Future<Map> facetsSearch(FacetSearchRequest request) {
     return transport.request(
       method: 'POST',
       path: encodePath(
@@ -71,11 +73,18 @@ class _SearchClient implements SearchClient {
   }
 
   @override
-  Future<Map> browse(SearchRequest request, [String? cursor]) {
-    return transport.request(
-      method: 'POST',
-      path: encodePath('/1/indexes/${request.indexName}/browse'),
-      body: request.encode(cursor),
-    );
+  Stream<Map> browse(SearchRequest request) async* {
+    final path = encodePath('/1/indexes/${request.indexName}/browse');
+    String? cursor;
+    while (true) {
+      final res = await transport.request(
+        method: 'POST',
+        path: path,
+        body: request.encode(cursor),
+      );
+      yield res;
+      cursor = res['cursor'];
+      if (cursor == null) break;
+    }
   }
 }

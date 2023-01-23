@@ -1,5 +1,3 @@
-typedef Params = Map<String, dynamic>;
-
 /// Represents a search request.
 class SearchRequest {
   /// The index to query.

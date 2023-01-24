@@ -1,3 +1,6 @@
-## 1.0.0
+## 0.1.0
 
-- Initial version.
+### Added
+
+- Search Client with search, browse and objects endpoints.
+

@@ -43,3 +43,22 @@ extension FacetSearchRequestEncode on FacetSearchRequest {
     return jsonEncode(data);
   }
 }
+
+extension ObjectsRequestEncode on ObjectsRequest {
+  String encode() {
+    final data = {
+      'requests': requests.map((request) => request.toJson()).toList(),
+    };
+    return jsonEncode(data);
+  }
+}
+
+extension ObjectRequestEncode on ObjectRequest {
+  Map<String, dynamic> toJson() {
+    return {
+      'indexName': indexName,
+      'objectID': objectID,
+      if (attributesToRetrieve != null) 'maxFacetHits': attributesToRetrieve,
+    };
+  }
+}

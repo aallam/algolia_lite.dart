@@ -37,6 +37,9 @@ abstract class SearchClient {
   /// for analytics. Each API request retrieves up to 1,000 objects and supports
   /// filters and full-text search via [request.params].
   Stream<BrowseResponse> browse(SearchRequest request);
+
+  /// Retrieve one or more objects, potentially from different indices.
+  Future<ObjectsResponse> objects(ObjectsRequest request);
 }
 
 class _SearchClient implements SearchClient {
@@ -90,5 +93,17 @@ class _SearchClient implements SearchClient {
       cursor = json['cursor'];
       if (cursor == null) break;
     }
+  }
+
+  @override
+  Future<ObjectsResponse> objects(ObjectsRequest request) async {
+    final json = await transport.request(
+      method: 'POST',
+      path: encodePath(
+        '/1/indexes/*/objects',
+      ),
+      body: request.encode(),
+    );
+    return ObjectsResponse(json);
   }
 }

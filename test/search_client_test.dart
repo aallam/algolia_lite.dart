@@ -53,4 +53,18 @@ void main() {
     final stream = client.browse(req);
     expect(stream, emitsInOrder([mayEmitMultiple(anything), emitsDone]));
   });
+
+  test('Objects', () async {
+    final client = SearchClient(
+      applicationID: 'latency',
+      apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
+    );
+    final req = ObjectsRequest(requests: [
+      ObjectRequest(indexName: 'instant_search', objectID: '6443034'),
+      ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
+    ]);
+    final res = await client.objects(req);
+    print(res);
+    expect(res.isNotEmpty, true);
+  });
 }

@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:compute/compute.dart';
 
 /// Asynchronously decode bytes into JSON.
-Future<Map<String, dynamic>> jsonDecode(Uint8List bytes) =>
-    compute(_jsonDecode, bytes);
+Future<Map<String, dynamic>> jsonDecode(String jsonString) =>
+    compute(_jsonDecode, jsonString);
 
 /// Decode [bytes] into JSON.
-Map<String, dynamic> _jsonDecode(Uint8List bytes) =>
-    json.decode(utf8.decode(bytes));
+Map<String, dynamic> _jsonDecode(String jsonString) => json.decode(jsonString);

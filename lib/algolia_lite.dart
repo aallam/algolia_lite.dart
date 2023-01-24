@@ -1,3 +1,6 @@
+/// Algolia API Client Lite
+///
+/// Provides API clients for read only operations such as search and insights.
 library algolia_lite;
 
 export 'src/exception.dart';

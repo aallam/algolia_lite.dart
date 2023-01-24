@@ -4,19 +4,42 @@ import 'package:meta/meta.dart';
 @sealed
 abstract class AlgoliaException implements Exception {}
 
-/// Exception thrown when an error occurs during API requests.
-class AlgoliaClientException implements AlgoliaException {}
-
 /// Exception thrown in case of API failure.
 class AlgoliaApiException implements AlgoliaException {
   const AlgoliaApiException(this.httpStatusCode, this.message);
 
-  final String message;
   final int httpStatusCode;
+  final String? message;
 
   @override
   String toString() {
     return 'AlgoliaApiException{message: $message, httpStatusCode: $httpStatusCode}';
+  }
+}
+
+/// Exception thrown in case of request timeout.
+class AlgoliaTimeoutException implements AlgoliaException {
+  const AlgoliaTimeoutException(this.message);
+
+  /// Timeout error message.
+  final String? message;
+
+  @override
+  String toString() {
+    return 'AlgoliaTimeoutException{message: $message}';
+  }
+}
+
+/// Exception thrown in case I/O exceptions
+class AlgoliaIOException implements AlgoliaException {
+  const AlgoliaIOException(this.error);
+
+  /// Inner error.
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'AlgoliaIOException{error: $error}';
   }
 }
 

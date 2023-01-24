@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import '../host.dart';
 import 'requester_http.dart';
 
@@ -42,7 +40,7 @@ class HttpResponse {
   HttpResponse(this.statusCode, this.body);
 
   final int statusCode;
-  final Uint8List body;
+  final String? body;
 
   @override
   String toString() {

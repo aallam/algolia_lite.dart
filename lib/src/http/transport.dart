@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 
+import '../configuration.dart';
 import '../exception.dart';
 import '../host.dart';
 import '../request_options.dart';
-import '../configuration.dart';
 import 'decoder.dart';
 import 'requester.dart';
 import 'stateful_host.dart';
@@ -58,11 +57,12 @@ class _HttpTransport implements HttpTransport {
           _buildRequest(host, path, method, body, requestOptions);
       try {
         final response = await requester.perform(request);
-        return jsonDecode(response.body);
-      } on TimeoutException catch (e) {
+        final body = response.body;
+        return body != null ? await jsonDecode(body) : const {};
+      } on AlgoliaTimeoutException catch (e) {
         host.timedOut();
         errors.add(e);
-      } on IOException catch (e) {
+      } on AlgoliaIOException catch (e) {
         host.failed();
         errors.add(e);
       } on AlgoliaApiException catch (e) {

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'search_request.dart';
+import '../model/models.dart';
 
 /// URL encode [path] string.
 String encodePath(String path, [Map<String, dynamic>? queryParams]) =>

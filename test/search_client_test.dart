@@ -61,7 +61,6 @@ void main() {
     );
     final req = ObjectRequest(indexName: 'instant_search', objectID: '6443034');
     final res = await client.object(req);
-    print(res);
     expect(res.isNotEmpty, true);
   });
 
@@ -75,7 +74,6 @@ void main() {
       ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
     ];
     final res = await client.objects(reqs);
-    print(res);
     expect(res.isNotEmpty, true);
   });
 }

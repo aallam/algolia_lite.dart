@@ -7,4 +7,5 @@ export 'src/exception.dart';
 export 'src/request_options.dart';
 export 'src/search/search_client.dart';
 export 'src/search/search_config.dart';
-export 'src/search/search_request.dart';
+export 'src/model/models.dart';
+export 'src/search/search.dart';

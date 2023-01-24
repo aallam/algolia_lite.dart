@@ -38,8 +38,11 @@ abstract class SearchClient {
   /// filters and full-text search via [request.params].
   Stream<BrowseResponse> browse(SearchRequest request);
 
+  /// Retrieve one object from the index.
+  Future<ObjectResponse> object(ObjectRequest request);
+
   /// Retrieve one or more objects, potentially from different indices.
-  Future<ObjectsResponse> objects(ObjectsRequest request);
+  Future<List<ObjectResponse>> objects(List<ObjectRequest> request);
 }
 
 class _SearchClient implements SearchClient {
@@ -96,14 +99,26 @@ class _SearchClient implements SearchClient {
   }
 
   @override
-  Future<ObjectsResponse> objects(ObjectsRequest request) async {
+  Future<ObjectResponse> object(ObjectRequest request) async {
+    final json = await transport.request(
+      method: 'GET',
+      path: encodePath(
+        '/1/indexes/${request.indexName}/${request.objectID}',
+        request.queryParams(),
+      ),
+    );
+    return ObjectResponse(json);
+  }
+
+  @override
+  Future<List<ObjectResponse>> objects(List<ObjectRequest> request) async {
     final json = await transport.request(
       method: 'POST',
-      path: encodePath(
-        '/1/indexes/*/objects',
-      ),
+      path: '/1/indexes/*/objects',
       body: request.encode(),
     );
-    return ObjectsResponse(json);
+    final results = json['results'] as List;
+    final objects = results.map((e) => Map<String, dynamic>.from(e)).toList();
+    return objects.map((json) => ObjectResponse(json)).toList();
   }
 }

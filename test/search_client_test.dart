@@ -54,16 +54,27 @@ void main() {
     expect(stream, emitsInOrder([mayEmitMultiple(anything), emitsDone]));
   });
 
+  test('Object', () async {
+    final client = SearchClient(
+      applicationID: 'latency',
+      apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
+    );
+    final req = ObjectRequest(indexName: 'instant_search', objectID: '6443034');
+    final res = await client.object(req);
+    print(res);
+    expect(res.isNotEmpty, true);
+  });
+
   test('Objects', () async {
     final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = ObjectsRequest(requests: [
+    final reqs = [
       ObjectRequest(indexName: 'instant_search', objectID: '6443034'),
       ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
-    ]);
-    final res = await client.objects(req);
+    ];
+    final res = await client.objects(reqs);
     print(res);
     expect(res.isNotEmpty, true);
   });

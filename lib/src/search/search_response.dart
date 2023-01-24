@@ -42,11 +42,11 @@ class BrowseResponse extends DelegatingMap<String, dynamic> {
 }
 
 /// Search response.
-class ObjectsResponse extends DelegatingMap<String, dynamic> {
+class ObjectResponse extends DelegatingMap<String, dynamic> {
   /// Json response as [Map].
   final Map<String, dynamic> json;
 
-  /// Create a [SearchResponse] instance.
+  /// Create a [ObjectResponse] instance.
   @internal
-  const ObjectsResponse(this.json) : super(json);
+  const ObjectResponse(this.json) : super(json);
 }

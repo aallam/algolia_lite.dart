@@ -77,15 +77,6 @@ class FacetSearchRequest extends DelegatingMap<String, dynamic> {
   }) : super(params);
 }
 
-/// Represents objects search request.
-class ObjectsRequest extends DelegatingList<ObjectRequest> {
-  /// A list of search requests.
-  final List<ObjectRequest> requests;
-
-  /// Create a [MultiSearchRequest] instance.
-  ObjectsRequest({required this.requests}) : super(requests);
-}
-
 /// Represents an object search request.
 class ObjectRequest {
   /// Name of the index containing the object
@@ -96,12 +87,12 @@ class ObjectRequest {
 
   /// List of attributes to retrieve. By default, all retrievable attributes
   /// are returned.
-  final List<String>? attributesToRetrieve;
+  final List<String>? attributes;
 
   /// Create a [ObjectRequest] instance.
   ObjectRequest({
     required this.indexName,
     required this.objectID,
-    this.attributesToRetrieve,
+    this.attributes,
   });
 }

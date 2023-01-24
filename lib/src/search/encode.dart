@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'search_request.dart';
 
 /// URL encode [path] string.
-String encodePath(String path) => Uri(path: path).path;
+String encodePath(String path, [Map<String, dynamic>? queryParams]) =>
+    Uri(path: path, queryParameters: queryParams).path;
 
 extension SearchRequestEncode on SearchRequest {
   String encodedParams() => Uri(queryParameters: params).query;
@@ -44,21 +45,24 @@ extension FacetSearchRequestEncode on FacetSearchRequest {
   }
 }
 
-extension ObjectsRequestEncode on ObjectsRequest {
-  String encode() {
-    final data = {
-      'requests': requests.map((request) => request.toJson()).toList(),
-    };
-    return jsonEncode(data);
-  }
-}
-
 extension ObjectRequestEncode on ObjectRequest {
+  Map<String, dynamic>? queryParams() =>
+      attributes != null ? {'attributes': attributes} : null;
+
   Map<String, dynamic> toJson() {
     return {
       'indexName': indexName,
       'objectID': objectID,
-      if (attributesToRetrieve != null) 'maxFacetHits': attributesToRetrieve,
+      if (attributes != null) 'maxFacetHits': attributes,
     };
+  }
+}
+
+extension ObjectsRequestEncode on List<ObjectRequest> {
+  String encode() {
+    final data = {
+      'requests': map((request) => request.toJson()).toList(),
+    };
+    return jsonEncode(data);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:algolia_lite/src/http/configuration.dart';
+import 'package:algolia_lite/src/configuration.dart';
 
 import '../host.dart';
 

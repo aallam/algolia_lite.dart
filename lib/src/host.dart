@@ -6,7 +6,7 @@ class Host {
   /// Host url, without protocol.
   final String url;
 
-  Host(this.url, {this.scheme = 'https'});
+  const Host(this.url, {this.scheme = 'https'});
 
   @override
   String toString() => 'Host{protocol: $scheme, url: $url}';

@@ -1,4 +1,4 @@
-import '../host.dart';
+import 'host.dart';
 
 /// Configuration used by a client.
 abstract class Configuration {

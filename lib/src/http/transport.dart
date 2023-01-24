@@ -4,7 +4,7 @@ import 'dart:io';
 import '../exception.dart';
 import '../host.dart';
 import '../request_options.dart';
-import 'configuration.dart';
+import '../configuration.dart';
 import 'decoder.dart';
 import 'requester.dart';
 import 'stateful_host.dart';
@@ -14,14 +14,14 @@ abstract class HttpTransport {
   /// Create [HttpTransport] instance.
   factory HttpTransport.create(
     Configuration config,
-    HttpRequester requester,
+    Requester requester,
   ) =>
       _HttpTransport(requester, config);
 
   factory HttpTransport(
     Configuration config,
   ) =>
-      _HttpTransport(HttpRequester(), config);
+      _HttpTransport(Requester(), config);
 
   /// Run an request and get a response.
   Future<Map<String, dynamic>> request({
@@ -39,7 +39,7 @@ class _HttpTransport implements HttpTransport {
             ? _searchHostsOfApp(config.applicationID)
             : _customSearchHostsOf(config.hosts!);
 
-  final HttpRequester requester;
+  final Requester requester;
   final Configuration config;
   final Iterable<StatefulHost> hosts;
 

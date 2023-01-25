@@ -1,24 +1,14 @@
-.DS_Store
-.packages
-.pub/
-ios/.generated/
-packages
-pubspec.lock
-.idea/
+# Dart
 .dart_tool/
-
-# Directory created by dartdoc
+build/
+pubspec.lock
 doc/api/
 
-# Local folder
-.local/
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
 
-# local flutter install (travis)
-flutter
-
-# Conventional directory for build outputs
-build/
-coverage/
-
-# flutter
-.metadata
+# Misc.
+.DS_Store

@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:isolate';
 
 import '../configuration.dart';
 import '../exception.dart';
 import '../host.dart';
 import '../request_options.dart';
-import 'decoder.dart';
 import 'requester.dart';
 import 'stateful_host.dart';
 
@@ -29,6 +30,8 @@ abstract class HttpTransport {
     RequestOptions? requestOptions,
     String? body,
   });
+
+  void dispose();
 }
 
 /// Implementation of [HttpTransport].
@@ -58,7 +61,7 @@ class _HttpTransport implements HttpTransport {
       try {
         final response = await requester.perform(request);
         final body = response.body;
-        return body != null ? await jsonDecode(body) : const {};
+        return body != null ? await _jsonDecode(body) : const {};
       } on AlgoliaTimeoutException catch (e) {
         host.timedOut();
         errors.add(e);
@@ -126,6 +129,11 @@ class _HttpTransport implements HttpTransport {
   Map<String, String> _defaultQueryParams() =>
       const {'x-algolia-agent': 'algolia lite (0.0.1)'};
 
+  /// Decodes [jsonString] to a [Map].
+  Future<Map<String, dynamic>> _jsonDecode(String jsonString) =>
+      Isolate.run(() => json.decode(jsonString));
+
+  @override
   void dispose() => requester.close();
 }
 

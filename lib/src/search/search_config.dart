@@ -2,7 +2,7 @@ import 'package:algolia_lite/src/configuration.dart';
 
 import '../host.dart';
 
-class SearchConfig implements Configuration {
+class SearchConfig implements ClientConfig {
   @override
   final String applicationID;
   @override

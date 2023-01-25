@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 /// Facet search response.
-class FacetSearchResponse extends DelegatingMap<String, dynamic> {
+class FacetSearchResponse extends DelegatingMap {
   /// Json response as [Map].
-  final Map<String, dynamic> json;
+  final Map json;
 
   /// Create a [FacetSearchResponse] instance.
   @internal

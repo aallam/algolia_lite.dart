@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 /// Browse response.
-class BrowseResponse extends DelegatingMap<String, dynamic> {
+class BrowseResponse extends DelegatingMap {
   /// Json response as [Map].
-  final Map<String, dynamic> json;
+  final Map json;
 
   /// Create a [BrowseResponse] instance.
   @internal

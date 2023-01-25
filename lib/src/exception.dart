@@ -6,27 +6,27 @@ abstract class AlgoliaException implements Exception {}
 
 /// Exception thrown in case of API failure.
 class AlgoliaApiException implements AlgoliaException {
-  const AlgoliaApiException(this.httpStatusCode, this.message);
+  const AlgoliaApiException(this.statusCode, this.error);
 
-  final int httpStatusCode;
-  final String? message;
+  final int statusCode;
+  final dynamic error;
 
   @override
   String toString() {
-    return 'AlgoliaApiException{message: $message, httpStatusCode: $httpStatusCode}';
+    return 'AlgoliaApiException{statusCode: $statusCode, error: $error}';
   }
 }
 
 /// Exception thrown in case of request timeout.
 class AlgoliaTimeoutException implements AlgoliaException {
-  const AlgoliaTimeoutException(this.message);
+  const AlgoliaTimeoutException(this.error);
 
   /// Timeout error message.
-  final String? message;
+  final dynamic error;
 
   @override
   String toString() {
-    return 'AlgoliaTimeoutException{message: $message}';
+    return 'AlgoliaTimeoutException{error: $error}';
   }
 }
 

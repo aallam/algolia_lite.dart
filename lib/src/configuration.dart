@@ -1,7 +1,7 @@
 import 'host.dart';
 
 /// Configuration used by a client.
-abstract class Configuration {
+abstract class ClientConfig {
   /// Application to target. Is passed as a HTTP header.
   String get applicationID;
 

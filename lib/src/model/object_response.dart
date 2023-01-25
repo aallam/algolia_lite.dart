@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 /// Search response.
-class ObjectResponse extends DelegatingMap<String, dynamic> {
+class ObjectResponse extends DelegatingMap {
   /// Json response as [Map].
-  final Map<String, dynamic> json;
+  final Map json;
 
   /// Create a [ObjectResponse] instance.
   @internal

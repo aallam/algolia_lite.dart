@@ -1,9 +1,10 @@
+import '../configuration.dart';
 import '../host.dart';
-import 'requester_http.dart';
+import 'requester_dio.dart';
 
 /// This contract allows you to run http requests and get response.
 abstract class Requester {
-  factory Requester() => HttpRequester();
+  factory Requester(ClientConfig config) => DioRequester(config);
 
   /// Run an http request and get the result.
   Future<HttpResponse> perform(HttpRequest request);
@@ -39,8 +40,8 @@ class HttpRequest {
 class HttpResponse {
   HttpResponse(this.statusCode, this.body);
 
-  final int statusCode;
-  final String? body;
+  final int? statusCode;
+  final Map? body;
 
   @override
   String toString() {

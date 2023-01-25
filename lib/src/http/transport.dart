@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:isolate';
 
 import '../configuration.dart';
 import '../exception.dart';
@@ -13,18 +11,18 @@ import 'stateful_host.dart';
 abstract class HttpTransport {
   /// Create [HttpTransport] instance.
   factory HttpTransport.create(
-    Configuration config,
+    ClientConfig config,
     Requester requester,
   ) =>
       _HttpTransport(requester, config);
 
   factory HttpTransport(
-    Configuration config,
+    ClientConfig config,
   ) =>
-      _HttpTransport(Requester(), config);
+      _HttpTransport(Requester(config), config);
 
   /// Run an request and get a response.
-  Future<Map<String, dynamic>> request({
+  Future<Map> request({
     required String method,
     required String path,
     RequestOptions? requestOptions,
@@ -42,11 +40,11 @@ class _HttpTransport implements HttpTransport {
             : _customSearchHostsOf(config.hosts!);
 
   final Requester requester;
-  final Configuration config;
+  final ClientConfig config;
   final Iterable<StatefulHost> hosts;
 
   @override
-  Future<Map<String, dynamic>> request({
+  Future<Map> request({
     required String method,
     required String path,
     RequestOptions? requestOptions,
@@ -60,8 +58,7 @@ class _HttpTransport implements HttpTransport {
           _buildRequest(host, path, method, body, requestOptions);
       try {
         final response = await requester.perform(request);
-        final body = response.body;
-        return body != null ? await _jsonDecode(body) : const {};
+        return response.body ?? const {};
       } on AlgoliaTimeoutException catch (e) {
         host.timedOut();
         errors.add(e);
@@ -69,7 +66,7 @@ class _HttpTransport implements HttpTransport {
         host.failed();
         errors.add(e);
       } on AlgoliaApiException catch (e) {
-        if (e.httpStatusCode / 100 == 4) rethrow;
+        if (e.statusCode / 100 == 4) rethrow;
         host.failed();
         errors.add(e);
       }
@@ -99,11 +96,6 @@ class _HttpTransport implements HttpTransport {
     String? body,
     RequestOptions? requestOptions,
   ) {
-    final Map<String, String> headers = {
-      ..._credentialsHeaders(),
-      ...?config.headers,
-      ...?requestOptions?.headers,
-    };
     final Map<String, String> queryParams = {
       ..._defaultQueryParams(),
       ...?requestOptions?.queryParams,
@@ -115,23 +107,14 @@ class _HttpTransport implements HttpTransport {
       host: host.host,
       path: path,
       timeout: timeout,
-      headers: headers,
+      headers: requestOptions?.headers,
       body: body,
       queryParameters: queryParams,
     );
   }
 
-  Map<String, String> _credentialsHeaders() => {
-        'X-Algolia-Application-Id': config.applicationID,
-        'X-Algolia-API-Key': config.apiKey,
-      };
-
   Map<String, String> _defaultQueryParams() =>
       const {'x-algolia-agent': 'algolia lite (0.0.1)'};
-
-  /// Decodes [jsonString] to a [Map].
-  Future<Map<String, dynamic>> _jsonDecode(String jsonString) =>
-      Isolate.run(() => json.decode(jsonString));
 
   @override
   void dispose() => requester.close();

@@ -1,6 +1,7 @@
 # Algolia Dart API Client _Lite_
 
 [![pub package](https://img.shields.io/pub/v/algolia_lite.svg)](https://pub.dev/packages/algolia_lite)
+[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
 Dart API client to interact with Algolia, designed for client apps.
 

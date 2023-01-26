@@ -1,8 +1,7 @@
-import '../http/transport.dart';
-import '../model/models.dart';
-import 'encode.dart';
-import 'search_client.dart';
-import 'search_config.dart';
+import 'package:algolia_lite/src/http/transport.dart';
+import 'package:algolia_lite/src/model/models.dart';
+import 'package:algolia_lite/src/search/encode.dart';
+import 'package:algolia_lite/src/search/search.dart';
 
 class SearchApiClient implements SearchClient {
   SearchApiClient(SearchConfig config) : transport = HttpTransport(config);
@@ -52,7 +51,7 @@ class SearchApiClient implements SearchClient {
         body: request.encode(cursor),
       );
       yield BrowseResponse(json);
-      cursor = json['cursor'];
+      cursor = json['cursor']?.toString();
       if (cursor == null) break;
     }
   }
@@ -77,7 +76,7 @@ class SearchApiClient implements SearchClient {
       body: request.encode(),
     );
     final results = json['results'] as List;
-    final objects = results.map((e) => Map<String, dynamic>.from(e)).toList();
+    final objects = results.map((e) => Map.from(e as Map)).toList();
     return objects.map((json) => ObjectResponse(json)).toList();
   }
 }

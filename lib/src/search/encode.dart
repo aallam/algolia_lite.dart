@@ -1,6 +1,9 @@
 import 'dart:convert';
 
-import '../model/models.dart';
+import 'package:algolia_lite/src/model/facet_search_request.dart';
+import 'package:algolia_lite/src/model/multi_search_request.dart';
+import 'package:algolia_lite/src/model/object_request.dart';
+import 'package:algolia_lite/src/model/search_request.dart';
 
 /// URL encode [path] string.
 String encodePath(String path, [Map<String, dynamic>? queryParams]) =>

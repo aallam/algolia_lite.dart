@@ -1,25 +1,25 @@
 import 'dart:async';
 
-import '../configuration.dart';
-import '../exception.dart';
-import '../host.dart';
-import '../request_options.dart';
-import 'requester.dart';
-import 'stateful_host.dart';
+import 'package:algolia_lite/src/configuration.dart';
+import 'package:algolia_lite/src/exception.dart';
+import 'package:algolia_lite/src/http/requester.dart';
+import 'package:algolia_lite/src/http/stateful_host.dart';
+import 'package:algolia_lite/src/request_options.dart';
 
 /// Component to run http requests with retry logic.
 abstract class HttpTransport {
+  /// Create [HttpTransport] instance.
+  factory HttpTransport(
+    ClientConfig config,
+  ) =>
+      _HttpTransport(Requester(config), config);
+
   /// Create [HttpTransport] instance.
   factory HttpTransport.create(
     ClientConfig config,
     Requester requester,
   ) =>
       _HttpTransport(requester, config);
-
-  factory HttpTransport(
-    ClientConfig config,
-  ) =>
-      _HttpTransport(Requester(config), config);
 
   /// Run an request and get a response.
   Future<Map> request({
@@ -35,9 +35,7 @@ abstract class HttpTransport {
 /// Implementation of [HttpTransport].
 class _HttpTransport implements HttpTransport {
   _HttpTransport(this.requester, this.config)
-      : hosts = (config.hosts?.isEmpty ?? true)
-            ? _searchHostsOfApp(config.applicationID)
-            : _customSearchHostsOf(config.hosts!);
+      : hosts = config.hosts.map((host) => StatefulHost(host));
 
   final Requester requester;
   final ClientConfig config;
@@ -54,8 +52,7 @@ class _HttpTransport implements HttpTransport {
     final List errors = [];
 
     for (final host in hosts) {
-      HttpRequest request =
-          _buildRequest(host, path, method, body, requestOptions);
+      final request = _buildRequest(host, path, method, body, requestOptions);
       try {
         final response = await requester.perform(request);
         return response.body ?? const {};
@@ -100,11 +97,11 @@ class _HttpTransport implements HttpTransport {
       ..._defaultQueryParams(),
       ...?requestOptions?.queryParams,
     };
-    final baseTimeout = (requestOptions?.timeout ?? config.timeout);
+    final baseTimeout = requestOptions?.timeout ?? config.timeout;
     final timeout = baseTimeout * (host.retryCount + 1);
     return HttpRequest(
       method: method,
-      host: host.host,
+      host: host,
       path: path,
       timeout: timeout,
       headers: requestOptions?.headers,
@@ -119,18 +116,3 @@ class _HttpTransport implements HttpTransport {
   @override
   void dispose() => requester.close();
 }
-
-Iterable<StatefulHost> _searchHostsOfApp(String appID) {
-  return [
-    StatefulHost.create('$appID-dsn.algolia.net'),
-    StatefulHost.create('$appID.algolia.net'),
-    ...([
-      StatefulHost.create('$appID-1.algolianet.com'),
-      StatefulHost.create('$appID-2.algolianet.com'),
-      StatefulHost.create('$appID-3.algolianet.com'),
-    ]..shuffle()),
-  ];
-}
-
-List<StatefulHost> _customSearchHostsOf(List<Host> hosts) =>
-    hosts.map((host) => StatefulHost(host)).toList();

@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:algolia_lite/src/model/models.dart';
+import 'package:algolia_lite/src/search/search_api_client.dart';
+import 'package:algolia_lite/src/search/search_config.dart';
 import 'package:meta/meta.dart';
-
-import '../model/models.dart';
-import 'search_api_client.dart';
-import 'search_config.dart';
 
 /// Client for search, browse and objects endpoints.
 @sealed

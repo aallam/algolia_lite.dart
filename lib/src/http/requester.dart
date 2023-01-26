@@ -1,6 +1,6 @@
-import '../configuration.dart';
-import '../host.dart';
-import 'requester_dio.dart';
+import 'package:algolia_lite/src/configuration.dart';
+import 'package:algolia_lite/src/host.dart';
+import 'package:algolia_lite/src/http/requester_dio.dart';
 
 /// This contract allows you to run http requests and get response.
 abstract class Requester {

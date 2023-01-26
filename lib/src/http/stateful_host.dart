@@ -1,15 +1,13 @@
-import '../host.dart';
+import 'package:algolia_lite/src/host.dart';
 
-class StatefulHost {
-  StatefulHost(this.host);
+class StatefulHost extends Host {
+  StatefulHost(Host host) : super(host.url, scheme: host.scheme);
 
-  StatefulHost.create(String url, {String scheme = 'https'})
-      : host = Host(url, scheme: scheme);
+  StatefulHost.create(super.url, {super.scheme});
 
-  final Host host;
-  var isUp = true;
-  var retryCount = 0;
-  var lastUpdate = DateTime.now();
+  bool isUp = true;
+  int retryCount = 0;
+  DateTime lastUpdate = DateTime.now();
 
   void reset() {
     isUp = true;
@@ -29,20 +27,23 @@ class StatefulHost {
   }
 
   @override
+  String toString() =>
+      'StatefulHost{isUp: $isUp, retryCount: $retryCount, lastUpdate: $lastUpdate}';
+
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is StatefulHost &&
+      super == other &&
+          other is StatefulHost &&
           runtimeType == other.runtimeType &&
-          host == other.host &&
           isUp == other.isUp &&
-          lastUpdate == other.lastUpdate &&
-          retryCount == other.retryCount;
+          retryCount == other.retryCount &&
+          lastUpdate == other.lastUpdate;
 
   @override
   int get hashCode =>
-      host.hashCode ^ isUp.hashCode ^ lastUpdate.hashCode ^ retryCount.hashCode;
-
-  @override
-  String toString() =>
-      'StatefulHost{host: $host, isUp: $isUp, lastUpdate: $lastUpdate, retryCount: $retryCount}';
+      super.hashCode ^
+      isUp.hashCode ^
+      retryCount.hashCode ^
+      lastUpdate.hashCode;
 }

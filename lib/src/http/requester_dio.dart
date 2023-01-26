@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:algolia_lite/src/configuration.dart';
+import 'package:algolia_lite/src/exception.dart';
+import 'package:algolia_lite/src/http/requester.dart';
 import 'package:dio/dio.dart';
-
-import '../exception.dart';
-import 'requester.dart';
 
 /// Implementation of [Requester] using [http].
 class DioRequester implements Requester {

@@ -1,3 +1,5 @@
+/// Extra request parameters, headers and timeout.
+/// Parameters set in the request option will override default parameter.
 class RequestOptions {
   final Map<String, String>? headers;
   final Duration? timeout;

@@ -1,4 +1,4 @@
-import 'host.dart';
+import 'package:algolia_lite/src/host.dart';
 
 /// Configuration used by a client.
 abstract class ClientConfig {
@@ -9,7 +9,7 @@ abstract class ClientConfig {
   String get apiKey;
 
   /// List of hosts and back-up host used to perform a custom retry logic.
-  List<Host>? get hosts;
+  Iterable<Host> get hosts;
 
   /// Default headers that should be applied to every request.
   Map<String, String>? get headers;

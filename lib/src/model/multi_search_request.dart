@@ -1,6 +1,5 @@
+import 'package:algolia_lite/src/model/search_request.dart';
 import 'package:collection/collection.dart';
-
-import 'search_request.dart';
 
 /// Represents a multi search request.
 class MultiSearchRequest extends DelegatingList<SearchRequest> {

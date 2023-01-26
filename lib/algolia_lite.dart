@@ -4,6 +4,7 @@
 library algolia_lite;
 
 export 'src/exception.dart';
+export 'src/insights/insights.dart';
 export 'src/model/models.dart';
 export 'src/request_options.dart';
 export 'src/search/search.dart';

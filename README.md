@@ -5,7 +5,9 @@
 
 Dart API client to interact with Algolia, designed for client apps.
 
-## 💡Getting Started
+## ▶️ Getting Started
+
+### 🔍 Search & Browse
 
 Create an instance of `SearchClient`:
 
@@ -87,6 +89,37 @@ var stream = client.browse(request);
 await for (var response in stream) {
   print(response);
 }
+```
+</details>
+
+### 💡 Insights
+
+Create `InsightsClient`:
+
+```dart
+final client = InsightsClient(
+    applicationID: 'MyApplicationID',
+    apiKey: 'MyApiKey',
+);
+```
+
+<details>
+<summary><strong>Send events</strong></summary>
+
+```dart
+await client.sendEvents(
+    [
+        InsightEvent({
+        'eventType': 'click',
+        'eventName': 'Clicked Search Result',
+        'index': 'instant_search',
+        'userToken': 'anonymous-xxxxxx-xx-xxx-xxxxxx',
+        'queryID': '43b15df305339e827f0ac0bdc5ebcaa7',
+        'objectIDs': ['item'],
+        'positions': [1],
+        }),
+    ],
+);
 ```
 </details>
 

@@ -26,10 +26,12 @@ extension MultiSearchRequestEncode on MultiSearchRequest {
   String encode() {
     final data = {
       'requests': requests
-          .map((request) => {
-                'indexName': request.indexName,
-                'params': request.encodedParams(),
-              })
+          .map(
+            (request) => {
+              'indexName': request.indexName,
+              'params': request.encodedParams(),
+            },
+          )
           .toList(),
       'strategy': strategy
     };

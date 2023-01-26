@@ -15,14 +15,15 @@ abstract class Requester {
 
 /// Represents an Http request.
 class HttpRequest {
-  HttpRequest(
-      {required this.method,
-      required this.host,
-      required this.path,
-      required this.timeout,
-      this.headers,
-      this.body,
-      required this.queryParameters});
+  HttpRequest({
+    required this.method,
+    required this.host,
+    required this.path,
+    required this.timeout,
+    this.headers,
+    this.body,
+    required this.queryParameters,
+  });
 
   final String method;
   final Host host;

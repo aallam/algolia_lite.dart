@@ -19,10 +19,12 @@ void main() async {
   /// Make multi search requests
   final params = {'query': 'van'};
   final multiSearchResponse = await client.multiSearch(
-    MultiSearchRequest(requests: [
-      SearchRequest.create(indexName: 'MyIndexName1', params: params),
-      SearchRequest.create(indexName: 'MyIndexName2', params: params),
-    ]),
+    MultiSearchRequest(
+      requests: [
+        SearchRequest.create(indexName: 'MyIndexName1', params: params),
+        SearchRequest.create(indexName: 'MyIndexName2', params: params),
+      ],
+    ),
   );
   print(multiSearchResponse);
 
@@ -58,7 +60,7 @@ void main() async {
   /// Make browse request
   final request = SearchRequest('MyIndexName');
   final stream = client.browse(request);
-  await for (var response in stream) {
+  await for (final response in stream) {
     print(response);
   }
 }

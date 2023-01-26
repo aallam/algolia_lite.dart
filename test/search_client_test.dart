@@ -20,12 +20,14 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = MultiSearchRequest(requests: [
-      SearchRequest.create(
-        indexName: 'instant_search',
-        params: {'query': 'a'},
-      )
-    ]);
+    final req = MultiSearchRequest(
+      requests: [
+        SearchRequest.create(
+          indexName: 'instant_search',
+          params: {'query': 'a'},
+        )
+      ],
+    );
     final res = await client.multiSearch(req);
     expect(res.isNotEmpty, true);
   });

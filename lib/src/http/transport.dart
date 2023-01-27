@@ -5,6 +5,7 @@ import 'package:algolia_lite/src/exception.dart';
 import 'package:algolia_lite/src/http/requester.dart';
 import 'package:algolia_lite/src/http/stateful_host.dart';
 import 'package:algolia_lite/src/request_options.dart';
+import 'package:algolia_lite/src/version.dart';
 
 /// Component to run http requests with retry logic.
 abstract class HttpTransport {
@@ -111,7 +112,7 @@ class _HttpTransport implements HttpTransport {
   }
 
   Map<String, String> _defaultQueryParams() =>
-      const {'x-algolia-agent': 'algolia lite (0.0.1)'};
+      const {'x-algolia-agent': 'Algolia Lite for Dart ($packageVersion)'};
 
   @override
   void dispose() => requester.close();

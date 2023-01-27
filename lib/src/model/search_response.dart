@@ -9,4 +9,5 @@ class SearchResponse extends DelegatingMap {
   /// Create a [SearchResponse] instance.
   @internal
   const SearchResponse(this.json) : super(json);
+
 }

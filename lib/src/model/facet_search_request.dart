@@ -1,6 +1,7 @@
 import 'package:algolia_lite/src/model/extension.dart';
 import 'package:algolia_lite/src/model/search_params.dart';
 import 'package:algolia_lite/src/search/encode.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -8,7 +9,7 @@ part 'facet_search_request.g.dart';
 
 /// Represents a facet search request.
 @serializable
-class FacetSearchRequest {
+class FacetSearchRequest extends Equatable {
   /// The index to query.
   @ignore
   final String indexName;
@@ -38,4 +39,17 @@ class FacetSearchRequest {
 
   @internal
   Map<String, dynamic> toJson() => _$FacetSearchRequestToJson(this);
+
+  @override
+  @ignore
+  List<Object?> get props => [indexName, facetName];
+
+  @override
+  @ignore
+  // ignore: hash_and_equals
+  int get hashCode => super.hashCode;
+
+  @override
+  @ignore
+  bool? get stringify => super.stringify;
 }

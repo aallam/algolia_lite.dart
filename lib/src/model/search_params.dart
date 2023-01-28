@@ -1,14 +1,13 @@
 import 'package:algolia_lite/src/model/extension.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 part 'search_params.g.dart';
 
 @serializable
 @CopyWith()
-class SearchParams {
+class SearchParams extends Equatable {
   /// Search query string
   final String? query;
 
@@ -208,4 +207,61 @@ class SearchParams {
 
   @internal
   Map<String, dynamic> toJson() => _$SearchParamsToJson(this)..addAll(extra);
+
+  @override
+  @ignore
+  List<Object?> get props => [
+        query,
+        page,
+        hitsPerPage,
+        facets,
+        disjunctiveFacets,
+        filters,
+        ruleContexts,
+        facetFilters,
+        attributesToHighlight,
+        attributesToRetrieve,
+        attributesToSnippet,
+        highlightPostTag,
+        highlightPreTag,
+        maxFacetHits,
+        maxValuesPerFacet,
+        numericFilters,
+        optionalFilters,
+        sumOrFiltersScore,
+        tagFilters,
+        userToken,
+        analytics,
+        similarQuery,
+        sumOrFiltersScores,
+        facetingAfterDistinct,
+        sortFacetValuesBy,
+        length,
+        aroundLatLng,
+        aroundLatLngViaIP,
+        aroundRadius,
+        aroundPrecision,
+        minimumAroundRadius,
+        insideBoundingBox,
+        insidePolygon,
+        naturalLanguages,
+        personalizationImpact,
+        getRankingInfo,
+        clickAnalytics,
+        analyticsTags,
+        percentileComputation,
+        enableABTest,
+        enableReRanking,
+        reRankingApplyFilter,
+        extra,
+      ];
+
+  @override
+  @ignore
+  // ignore: hash_and_equals
+  int get hashCode => super.hashCode;
+
+  @override
+  @ignore
+  bool? get stringify => super.stringify;
 }

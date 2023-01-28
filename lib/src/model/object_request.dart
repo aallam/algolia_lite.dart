@@ -1,11 +1,12 @@
 import 'package:algolia_lite/src/model/extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'object_request.g.dart';
 
 /// Represents an object search request.
 @serializable
-class ObjectRequest {
+class ObjectRequest extends Equatable {
   /// Name of the index containing the object
   final String indexName;
 
@@ -25,4 +26,17 @@ class ObjectRequest {
 
   @internal
   Map<String, dynamic> toJson() => _$ObjectRequestToJson(this);
+
+  @override
+  @ignore
+  List<Object?> get props => [indexName, objectID, attributes];
+
+  @override
+  @ignore
+  // ignore: hash_and_equals
+  int get hashCode => super.hashCode;
+
+  @override
+  @ignore
+  bool? get stringify => super.stringify;
 }

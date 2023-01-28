@@ -1,4 +1,5 @@
 import 'package:algolia_lite/src/model/extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -7,7 +8,7 @@ part 'insight_event.g.dart';
 /// Represents an insights event
 /// [documentation](https://www.algolia.com/doc/rest-api/insights/#send-events)
 @serializable
-class InsightEvent {
+class InsightEvent extends Equatable {
   /// "click" "conversion" or "view"
   final EventType eventType;
 
@@ -56,6 +57,29 @@ class InsightEvent {
 
   @internal
   Map<String, dynamic> toJson() => _$InsightEventToJson(this);
+
+  @override
+  @ignore
+  List<Object?> get props => [
+        eventType,
+        eventName,
+        index,
+        userToken,
+        timestamp,
+        queryID,
+        objectIDs,
+        filters,
+        positions,
+      ];
+
+  @override
+  @ignore
+  // ignore: hash_and_equals
+  int get hashCode => super.hashCode;
+
+  @override
+  @ignore
+  bool? get stringify => super.stringify;
 }
 
 @JsonEnum()

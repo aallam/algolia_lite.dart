@@ -1,11 +1,12 @@
 import 'package:algolia_lite/algolia_lite.dart';
 import 'package:algolia_lite/src/model/extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'objects_request.g.dart';
 
 @serializable
-class ObjectsRequest {
+class ObjectsRequest extends Equatable {
   /// List of object requests.
   final Iterable<ObjectRequest> requests;
 
@@ -14,4 +15,17 @@ class ObjectsRequest {
 
   @internal
   Map<String, dynamic> toJson() => _$ObjectsRequestToJson(this);
+
+  @override
+  @ignore
+  List<Object?> get props => [requests];
+
+  @override
+  @ignore
+  // ignore: hash_and_equals
+  int get hashCode => super.hashCode;
+
+  @override
+  @ignore
+  bool? get stringify => super.stringify;
 }

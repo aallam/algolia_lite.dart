@@ -1,7 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:algolia_lite/src/model/extension.dart';
+import 'package:meta/meta.dart';
+
+part 'object_request.g.dart';
 
 /// Represents an object search request.
-class ObjectRequest extends Equatable {
+@serializable
+class ObjectRequest {
   /// Name of the index containing the object
   final String indexName;
 
@@ -19,6 +23,6 @@ class ObjectRequest extends Equatable {
     this.attributes,
   });
 
-  @override
-  List<Object?> get props => [indexName, objectID, attributes];
+  @internal
+  Map<String, dynamic> toJson() => _$ObjectRequestToJson(this);
 }

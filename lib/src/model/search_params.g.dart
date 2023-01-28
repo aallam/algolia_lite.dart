@@ -17,22 +17,22 @@ abstract class _$SearchParamsCWProxy {
     String? query,
     int? page,
     int? hitsPerPage,
-    List<String>? facets,
+    Iterable<String>? facets,
     Set<String>? disjunctiveFacets,
     String? filters,
-    List<String>? ruleContexts,
-    List<String>? facetFilters,
-    List<String>? attributesToHighlight,
-    List<String>? attributesToRetrieve,
-    List<String>? attributesToSnippet,
+    Iterable<String>? ruleContexts,
+    Iterable<String>? facetFilters,
+    Iterable<String>? attributesToHighlight,
+    Iterable<String>? attributesToRetrieve,
+    Iterable<String>? attributesToSnippet,
     String? highlightPostTag,
     String? highlightPreTag,
     int? maxFacetHits,
     int? maxValuesPerFacet,
-    List<String>? numericFilters,
-    List<String>? optionalFilters,
+    Iterable<String>? numericFilters,
+    Iterable<String>? optionalFilters,
     bool? sumOrFiltersScore,
-    List<String>? tagFilters,
+    Iterable<String>? tagFilters,
     String? userToken,
     bool? analytics,
     String? similarQuery,
@@ -45,13 +45,13 @@ abstract class _$SearchParamsCWProxy {
     String? aroundRadius,
     int? aroundPrecision,
     int? minimumAroundRadius,
-    List<int>? insideBoundingBox,
-    List<int>? insidePolygon,
-    List<String>? naturalLanguages,
+    Iterable<int>? insideBoundingBox,
+    Iterable<int>? insidePolygon,
+    Iterable<String>? naturalLanguages,
     int? personalizationImpact,
     bool? getRankingInfo,
     bool? clickAnalytics,
-    List<String>? analyticsTags,
+    Iterable<String>? analyticsTags,
     bool? percentileComputation,
     bool? enableABTest,
     bool? enableReRanking,
@@ -135,7 +135,7 @@ class _$SearchParamsCWProxyImpl implements _$SearchParamsCWProxy {
       facets: facets == const $CopyWithPlaceholder()
           ? _value.facets
           // ignore: cast_nullable_to_non_nullable
-          : facets as List<String>?,
+          : facets as Iterable<String>?,
       disjunctiveFacets: disjunctiveFacets == const $CopyWithPlaceholder()
           ? _value.disjunctiveFacets
           // ignore: cast_nullable_to_non_nullable
@@ -147,24 +147,24 @@ class _$SearchParamsCWProxyImpl implements _$SearchParamsCWProxy {
       ruleContexts: ruleContexts == const $CopyWithPlaceholder()
           ? _value.ruleContexts
           // ignore: cast_nullable_to_non_nullable
-          : ruleContexts as List<String>?,
+          : ruleContexts as Iterable<String>?,
       facetFilters: facetFilters == const $CopyWithPlaceholder()
           ? _value.facetFilters
           // ignore: cast_nullable_to_non_nullable
-          : facetFilters as List<String>?,
+          : facetFilters as Iterable<String>?,
       attributesToHighlight:
           attributesToHighlight == const $CopyWithPlaceholder()
               ? _value.attributesToHighlight
               // ignore: cast_nullable_to_non_nullable
-              : attributesToHighlight as List<String>?,
+              : attributesToHighlight as Iterable<String>?,
       attributesToRetrieve: attributesToRetrieve == const $CopyWithPlaceholder()
           ? _value.attributesToRetrieve
           // ignore: cast_nullable_to_non_nullable
-          : attributesToRetrieve as List<String>?,
+          : attributesToRetrieve as Iterable<String>?,
       attributesToSnippet: attributesToSnippet == const $CopyWithPlaceholder()
           ? _value.attributesToSnippet
           // ignore: cast_nullable_to_non_nullable
-          : attributesToSnippet as List<String>?,
+          : attributesToSnippet as Iterable<String>?,
       highlightPostTag: highlightPostTag == const $CopyWithPlaceholder()
           ? _value.highlightPostTag
           // ignore: cast_nullable_to_non_nullable
@@ -184,11 +184,11 @@ class _$SearchParamsCWProxyImpl implements _$SearchParamsCWProxy {
       numericFilters: numericFilters == const $CopyWithPlaceholder()
           ? _value.numericFilters
           // ignore: cast_nullable_to_non_nullable
-          : numericFilters as List<String>?,
+          : numericFilters as Iterable<String>?,
       optionalFilters: optionalFilters == const $CopyWithPlaceholder()
           ? _value.optionalFilters
           // ignore: cast_nullable_to_non_nullable
-          : optionalFilters as List<String>?,
+          : optionalFilters as Iterable<String>?,
       sumOrFiltersScore: sumOrFiltersScore == const $CopyWithPlaceholder()
           ? _value.sumOrFiltersScore
           // ignore: cast_nullable_to_non_nullable
@@ -196,7 +196,7 @@ class _$SearchParamsCWProxyImpl implements _$SearchParamsCWProxy {
       tagFilters: tagFilters == const $CopyWithPlaceholder()
           ? _value.tagFilters
           // ignore: cast_nullable_to_non_nullable
-          : tagFilters as List<String>?,
+          : tagFilters as Iterable<String>?,
       userToken: userToken == const $CopyWithPlaceholder()
           ? _value.userToken
           // ignore: cast_nullable_to_non_nullable
@@ -249,15 +249,15 @@ class _$SearchParamsCWProxyImpl implements _$SearchParamsCWProxy {
       insideBoundingBox: insideBoundingBox == const $CopyWithPlaceholder()
           ? _value.insideBoundingBox
           // ignore: cast_nullable_to_non_nullable
-          : insideBoundingBox as List<int>?,
+          : insideBoundingBox as Iterable<int>?,
       insidePolygon: insidePolygon == const $CopyWithPlaceholder()
           ? _value.insidePolygon
           // ignore: cast_nullable_to_non_nullable
-          : insidePolygon as List<int>?,
+          : insidePolygon as Iterable<int>?,
       naturalLanguages: naturalLanguages == const $CopyWithPlaceholder()
           ? _value.naturalLanguages
           // ignore: cast_nullable_to_non_nullable
-          : naturalLanguages as List<String>?,
+          : naturalLanguages as Iterable<String>?,
       personalizationImpact:
           personalizationImpact == const $CopyWithPlaceholder()
               ? _value.personalizationImpact
@@ -274,7 +274,7 @@ class _$SearchParamsCWProxyImpl implements _$SearchParamsCWProxy {
       analyticsTags: analyticsTags == const $CopyWithPlaceholder()
           ? _value.analyticsTags
           // ignore: cast_nullable_to_non_nullable
-          : analyticsTags as List<String>?,
+          : analyticsTags as Iterable<String>?,
       percentileComputation:
           percentileComputation == const $CopyWithPlaceholder()
               ? _value.percentileComputation
@@ -311,78 +311,6 @@ extension $SearchParamsCopyWith on SearchParams {
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchParams _$SearchParamsFromJson(Map<String, dynamic> json) => SearchParams(
-      query: json['query'] as String?,
-      page: json['page'] as int?,
-      hitsPerPage: json['hitsPerPage'] as int?,
-      facets:
-          (json['facets'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      disjunctiveFacets: (json['disjunctiveFacets'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toSet(),
-      filters: json['filters'] as String?,
-      ruleContexts: (json['ruleContexts'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      facetFilters: (json['facetFilters'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      attributesToHighlight: (json['attributesToHighlight'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      attributesToRetrieve: (json['attributesToRetrieve'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      attributesToSnippet: (json['attributesToSnippet'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      highlightPostTag: json['highlightPostTag'] as String?,
-      highlightPreTag: json['highlightPreTag'] as String?,
-      maxFacetHits: json['maxFacetHits'] as int?,
-      maxValuesPerFacet: json['maxValuesPerFacet'] as int?,
-      numericFilters: (json['numericFilters'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      optionalFilters: (json['optionalFilters'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      sumOrFiltersScore: json['sumOrFiltersScore'] as bool?,
-      tagFilters: (json['tagFilters'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      userToken: json['userToken'] as String?,
-      analytics: json['analytics'] as bool?,
-      similarQuery: json['similarQuery'] as String?,
-      sumOrFiltersScores: json['sumOrFiltersScores'] as bool?,
-      facetingAfterDistinct: json['facetingAfterDistinct'] as bool?,
-      sortFacetValuesBy: json['sortFacetValuesBy'] as String?,
-      length: json['length'] as int?,
-      aroundLatLng: json['aroundLatLng'] as String?,
-      aroundLatLngViaIP: json['aroundLatLngViaIP'] as bool?,
-      aroundRadius: json['aroundRadius'] as String?,
-      aroundPrecision: json['aroundPrecision'] as int?,
-      minimumAroundRadius: json['minimumAroundRadius'] as int?,
-      insideBoundingBox: (json['insideBoundingBox'] as List<dynamic>?)
-          ?.map((e) => e as int)
-          .toList(),
-      insidePolygon: (json['insidePolygon'] as List<dynamic>?)
-          ?.map((e) => e as int)
-          .toList(),
-      naturalLanguages: (json['naturalLanguages'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      personalizationImpact: json['personalizationImpact'] as int?,
-      getRankingInfo: json['getRankingInfo'] as bool?,
-      clickAnalytics: json['clickAnalytics'] as bool?,
-      analyticsTags: (json['analyticsTags'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      percentileComputation: json['percentileComputation'] as bool?,
-      enableABTest: json['enableABTest'] as bool?,
-      enableReRanking: json['enableReRanking'] as bool?,
-      reRankingApplyFilter: json['reRankingApplyFilter'] as String?,
-    );
-
 Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) {
   final val = <String, dynamic>{};
 
@@ -395,22 +323,23 @@ Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) {
   writeNotNull('query', instance.query);
   writeNotNull('page', instance.page);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
-  writeNotNull('facets', instance.facets);
+  writeNotNull('facets', instance.facets?.toList());
   writeNotNull('disjunctiveFacets', instance.disjunctiveFacets?.toList());
   writeNotNull('filters', instance.filters);
-  writeNotNull('ruleContexts', instance.ruleContexts);
-  writeNotNull('facetFilters', instance.facetFilters);
-  writeNotNull('attributesToHighlight', instance.attributesToHighlight);
-  writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
-  writeNotNull('attributesToSnippet', instance.attributesToSnippet);
+  writeNotNull('ruleContexts', instance.ruleContexts?.toList());
+  writeNotNull('facetFilters', instance.facetFilters?.toList());
+  writeNotNull(
+      'attributesToHighlight', instance.attributesToHighlight?.toList());
+  writeNotNull('attributesToRetrieve', instance.attributesToRetrieve?.toList());
+  writeNotNull('attributesToSnippet', instance.attributesToSnippet?.toList());
   writeNotNull('highlightPostTag', instance.highlightPostTag);
   writeNotNull('highlightPreTag', instance.highlightPreTag);
   writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
-  writeNotNull('numericFilters', instance.numericFilters);
-  writeNotNull('optionalFilters', instance.optionalFilters);
+  writeNotNull('numericFilters', instance.numericFilters?.toList());
+  writeNotNull('optionalFilters', instance.optionalFilters?.toList());
   writeNotNull('sumOrFiltersScore', instance.sumOrFiltersScore);
-  writeNotNull('tagFilters', instance.tagFilters);
+  writeNotNull('tagFilters', instance.tagFilters?.toList());
   writeNotNull('userToken', instance.userToken);
   writeNotNull('analytics', instance.analytics);
   writeNotNull('similarQuery', instance.similarQuery);
@@ -423,13 +352,13 @@ Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) {
   writeNotNull('aroundRadius', instance.aroundRadius);
   writeNotNull('aroundPrecision', instance.aroundPrecision);
   writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
-  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
-  writeNotNull('insidePolygon', instance.insidePolygon);
-  writeNotNull('naturalLanguages', instance.naturalLanguages);
+  writeNotNull('insideBoundingBox', instance.insideBoundingBox?.toList());
+  writeNotNull('insidePolygon', instance.insidePolygon?.toList());
+  writeNotNull('naturalLanguages', instance.naturalLanguages?.toList());
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('getRankingInfo', instance.getRankingInfo);
   writeNotNull('clickAnalytics', instance.clickAnalytics);
-  writeNotNull('analyticsTags', instance.analyticsTags);
+  writeNotNull('analyticsTags', instance.analyticsTags?.toList());
   writeNotNull('percentileComputation', instance.percentileComputation);
   writeNotNull('enableABTest', instance.enableABTest);
   writeNotNull('enableReRanking', instance.enableReRanking);

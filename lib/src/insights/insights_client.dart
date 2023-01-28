@@ -1,6 +1,6 @@
 import 'package:algolia_lite/src/insights/insights_api_client.dart';
 import 'package:algolia_lite/src/insights/insights_config.dart';
-import 'package:algolia_lite/src/model/insights_event.dart';
+import 'package:algolia_lite/src/model/insight_event.dart';
 
 /// Client for Algolia Insights.
 /// [documentation](https://www.algolia.com/doc/rest-api/insights/)

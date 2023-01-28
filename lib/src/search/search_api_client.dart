@@ -1,5 +1,7 @@
 import 'package:algolia_lite/src/http/transport.dart';
 import 'package:algolia_lite/src/model/models.dart';
+import 'package:algolia_lite/src/model/objects_request.dart';
+import 'package:algolia_lite/src/model/objects_response.dart';
 import 'package:algolia_lite/src/search/encode.dart';
 import 'package:algolia_lite/src/search/search.dart';
 
@@ -12,10 +14,10 @@ class SearchApiClient implements SearchClient {
   Future<SearchResponse> search(SearchRequest request) async {
     final json = await transport.request(
       method: 'POST',
-      path: encodePath('/1/indexes/${request.indexName}/query'),
+      path: '/1/indexes/${request.indexName}/query',
       body: request.encode(),
     );
-    return SearchResponse(json);
+    return SearchResponse.fromJson(json);
   }
 
   @override
@@ -23,7 +25,7 @@ class SearchApiClient implements SearchClient {
     final json = await transport.request(
       method: 'POST',
       path: '/1/indexes/*/queries',
-      body: request.encode(),
+      body: request.toJson(),
     );
     return MultiSearchResponse(json);
   }
@@ -32,17 +34,15 @@ class SearchApiClient implements SearchClient {
   Future<FacetSearchResponse> facetsSearch(FacetSearchRequest request) async {
     final json = await transport.request(
       method: 'POST',
-      path: encodePath(
-        '/1/indexes/${request.indexName}/facets/${request.facetName}/query',
-      ),
-      body: request.encode(),
+      path: '/1/indexes/${request.indexName}/facets/${request.facetName}/query',
+      body: request.toJson(),
     );
     return FacetSearchResponse(json);
   }
 
   @override
   Stream<BrowseResponse> browse(SearchRequest request) async* {
-    final path = encodePath('/1/indexes/${request.indexName}/browse');
+    final path = '/1/indexes/${request.indexName}/browse';
     String? cursor;
     while (true) {
       final json = await transport.request(
@@ -50,7 +50,7 @@ class SearchApiClient implements SearchClient {
         path: path,
         body: request.encode(cursor),
       );
-      yield BrowseResponse(json);
+      yield BrowseResponse.fromJson(json);
       cursor = json['cursor']?.toString();
       if (cursor == null) break;
     }
@@ -60,23 +60,21 @@ class SearchApiClient implements SearchClient {
   Future<ObjectResponse> object(ObjectRequest request) async {
     final json = await transport.request(
       method: 'GET',
-      path: encodePath(
-        '/1/indexes/${request.indexName}/${request.objectID}',
-        request.queryParams(),
-      ),
+      path: '/1/indexes/${request.indexName}/${request.objectID}',
+      queryParams: request.toQueryParams(),
     );
     return ObjectResponse(json);
   }
 
   @override
-  Future<List<ObjectResponse>> objects(List<ObjectRequest> request) async {
+  Future<Iterable<ObjectResponse>> objects(
+    Iterable<ObjectRequest> requests,
+  ) async {
     final json = await transport.request(
       method: 'POST',
       path: '/1/indexes/*/objects',
-      body: request.encode(),
+      body: ObjectsRequest(requests).toJson(),
     );
-    final results = json['results'] as List;
-    final objects = results.map((e) => Map.from(e as Map)).toList();
-    return objects.map((json) => ObjectResponse(json)).toList();
+    return ObjectsResponse.fromJson(json).results;
   }
 }

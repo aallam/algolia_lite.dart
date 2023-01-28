@@ -40,5 +40,5 @@ abstract class SearchClient {
   Future<ObjectResponse> object(ObjectRequest request);
 
   /// Retrieve one or more objects, potentially from different indices.
-  Future<List<ObjectResponse>> objects(List<ObjectRequest> request);
+  Future<Iterable<ObjectResponse>> objects(Iterable<ObjectRequest> request);
 }

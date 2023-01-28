@@ -1,10 +1,17 @@
+import 'package:algolia_lite/src/model/extension.dart';
 import 'package:algolia_lite/src/model/search_request.dart';
-import 'package:equatable/equatable.dart';
+import 'package:algolia_lite/src/search/encode.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
+
+part 'multi_search_request.g.dart';
 
 /// Represents a multi search request.
-class MultiSearchRequest extends Equatable {
+@serializable
+class MultiSearchRequest {
   /// A list of search requests.
-  final List<SearchRequest> requests;
+  @JsonKey(toJson: requestsToJson)
+  final Iterable<SearchRequest> requests;
 
   /// Allows optimizing execution of the queries.
   /// The following values are allowed: `none` and `stopIfEnoughMatches`.
@@ -16,6 +23,6 @@ class MultiSearchRequest extends Equatable {
     this.strategy = 'none',
   });
 
-  @override
-  List<Object?> get props => [requests, strategy];
+  @internal
+  Map<String, dynamic> toJson() => _$MultiSearchRequestToJson(this);
 }

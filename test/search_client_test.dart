@@ -17,7 +17,9 @@ void main() {
       ),
     );
     final res = await client.search(req);
-    expect(res.isNotEmpty, true);
+    expect(res.query, 'a');
+    expect(res.page, 1);
+    expect(res.hitsPerPage, 10);
   });
 
   test('Multi search request', () async {
@@ -34,7 +36,7 @@ void main() {
       ],
     );
     final res = await client.multiSearch(req);
-    expect(res.isNotEmpty, true);
+    expect(res.json.isNotEmpty, true);
   });
 
   test('Facet search request', () async {
@@ -48,7 +50,7 @@ void main() {
       facetQuery: 'a',
     );
     final res = await client.facetsSearch(req);
-    expect(res.isNotEmpty, true);
+    expect(res.json.isNotEmpty, true);
   });
 
   test('Browse All', () async {
@@ -66,9 +68,13 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    const req = ObjectRequest(indexName: 'instant_search', objectID: '6443034');
+    const req = ObjectRequest(
+      indexName: 'instant_search',
+      objectID: '6443034',
+      attributes: ['objectID'],
+    );
     final res = await client.object(req);
-    expect(res.isNotEmpty, true);
+    expect(res.json.isNotEmpty, true);
   });
 
   test('Objects search', () async {

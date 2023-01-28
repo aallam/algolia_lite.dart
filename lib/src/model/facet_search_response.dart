@@ -1,12 +1,11 @@
-import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 /// Facet search response.
-class FacetSearchResponse extends DelegatingMap {
+class FacetSearchResponse {
   /// Json response as [Map].
-  final Map json;
+  final Map<String, dynamic> json;
 
   /// Create a [FacetSearchResponse] instance.
   @internal
-  const FacetSearchResponse(this.json) : super(json);
+  const FacetSearchResponse(this.json);
 }

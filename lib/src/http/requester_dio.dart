@@ -38,7 +38,7 @@ class DioRequester implements Requester {
   }
 
   Future<HttpResponse> execute(HttpRequest request) async {
-    final response = await _client.requestUri<Map>(
+    final response = await _client.requestUri<Map<String, dynamic>>(
       _buildUri(request),
       data: request.body,
       options: Options(

@@ -1,12 +1,19 @@
+import 'package:algolia_lite/src/model/extension.dart';
 import 'package:algolia_lite/src/model/search_params.dart';
-import 'package:equatable/equatable.dart';
+import 'package:algolia_lite/src/search/encode.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
+
+part 'search_request.g.dart';
 
 /// Represents a search request.
-class SearchRequest extends Equatable {
+@serializable
+class SearchRequest {
   /// The index to query.
   final String indexName;
 
-  /// [Search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/).
+  /// Search parameters.
+  @JsonKey(toJson: encodeParams)
   final SearchParams? params;
 
   /// Create a [SearchRequest] instance.
@@ -15,6 +22,6 @@ class SearchRequest extends Equatable {
     this.params,
   });
 
-  @override
-  List<Object?> get props => [indexName, params];
+  @internal
+  Map<String, dynamic> toJson() => _$SearchRequestToJson(this);
 }

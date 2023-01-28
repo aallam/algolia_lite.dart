@@ -6,9 +6,9 @@ import 'package:meta/meta.dart';
 
 part 'search_params.g.dart';
 
-@JsonSerializable()
+@serializable
 @CopyWith()
-class SearchParams extends Equatable {
+class SearchParams {
   /// Search query string
   final String? query;
 
@@ -19,7 +19,7 @@ class SearchParams extends Equatable {
   final int? hitsPerPage;
 
   /// Search facets list
-  final List<String>? facets;
+  final Iterable<String>? facets;
 
   /// Disjunctive facets list
   final Set<String>? disjunctiveFacets;
@@ -28,21 +28,21 @@ class SearchParams extends Equatable {
   final String? filters;
 
   /// Search rule contexts
-  final List<String>? ruleContexts;
+  final Iterable<String>? ruleContexts;
 
   /// Filter hits by facet value.
-  final List<String>? facetFilters;
+  final Iterable<String>? facetFilters;
 
   /// List of attributes to highlight.
-  final List<String>? attributesToHighlight;
+  final Iterable<String>? attributesToHighlight;
 
   /// Gives control over which attributes to retrieve and which not to retrieve.
-  final List<String>? attributesToRetrieve;
+  final Iterable<String>? attributesToRetrieve;
 
   /// List of attributes to snippet,
   /// with an optional maximum number of words
   /// to snippet.
-  final List<String>? attributesToSnippet;
+  final Iterable<String>? attributesToSnippet;
 
   /// The HTML name to insert after the highlighted parts in all highlight
   /// and snippet results.
@@ -60,18 +60,18 @@ class SearchParams extends Equatable {
   final int? maxValuesPerFacet;
 
   /// Filter on numeric attributes.
-  final List<String>? numericFilters;
+  final Iterable<String>? numericFilters;
 
   /// Create filters for ranking purposes,
   /// where records that match the filter
   /// are ranked highest.
-  final List<String>? optionalFilters;
+  final Iterable<String>? optionalFilters;
 
   /// Determines how to calculate the total score for filtering.
   final bool? sumOrFiltersScore;
 
   /// Filter hits by tags.
-  final List<String>? tagFilters;
+  final Iterable<String>? tagFilters;
 
   /// Associates a certain user token with the current search.
   final String? userToken;
@@ -116,10 +116,10 @@ class SearchParams extends Equatable {
   final int? minimumAroundRadius;
 
   /// Search inside a rectangular area (in geo coordinates).
-  final List<int>? insideBoundingBox;
+  final Iterable<int>? insideBoundingBox;
 
   /// Search inside a polygon (in geo coordinates).
-  final List<int>? insidePolygon;
+  final Iterable<int>? insidePolygon;
 
   /// This parameter changes the default values of certain parameters and
   /// settings that work best for a natural language query, such as
@@ -128,7 +128,7 @@ class SearchParams extends Equatable {
   /// well together when the query is formatted in natural language
   /// instead of keywords, for example when your user performs a voice
   /// search.
-  final List<String>? naturalLanguages;
+  final Iterable<String>? naturalLanguages;
 
   /// Define the impact of the Personalization feature.
   final int? personalizationImpact;
@@ -140,7 +140,7 @@ class SearchParams extends Equatable {
   final bool? clickAnalytics;
 
   /// List of tags to apply to the query for analytics purposes.
-  final List<String>? analyticsTags;
+  final Iterable<String>? analyticsTags;
 
   /// Whether to include or exclude a query from the processing-time percentile
   /// computation.
@@ -208,52 +208,4 @@ class SearchParams extends Equatable {
 
   @internal
   Map<String, dynamic> toJson() => _$SearchParamsToJson(this)..addAll(extra);
-
-  @override
-  @ignore
-  List<Object?> get props => [
-        query,
-        page,
-        hitsPerPage,
-        facets,
-        disjunctiveFacets,
-        filters,
-        ruleContexts,
-        facetFilters,
-        attributesToHighlight,
-        attributesToRetrieve,
-        attributesToSnippet,
-        highlightPostTag,
-        highlightPreTag,
-        maxFacetHits,
-        maxValuesPerFacet,
-        numericFilters,
-        optionalFilters,
-        sumOrFiltersScore,
-        tagFilters,
-        userToken,
-        analytics,
-        similarQuery,
-        sumOrFiltersScores,
-        facetingAfterDistinct,
-        sortFacetValuesBy,
-        length,
-        aroundLatLng,
-        aroundLatLngViaIP,
-        aroundRadius,
-        aroundPrecision,
-        minimumAroundRadius,
-        insideBoundingBox,
-        insidePolygon,
-        naturalLanguages,
-        personalizationImpact,
-        getRankingInfo,
-        clickAnalytics,
-        analyticsTags,
-        percentileComputation,
-        enableABTest,
-        enableReRanking,
-        reRankingApplyFilter,
-        extra,
-      ];
 }

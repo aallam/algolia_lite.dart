@@ -9,6 +9,7 @@ environment:
 dependencies:
   collection: ^1.17.0
   dio: ^4.0.6
+  equatable: ^2.0.5
   json_annotation: ^4.8.0
   logging: ^1.1.1
   meta: ^1.8.0

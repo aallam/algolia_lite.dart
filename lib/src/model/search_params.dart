@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 part 'search_params.g.dart';
 
 @JsonSerializable(createFactory: false)
-class SearchParams {
+class SearchParams extends Equatable {
   /// Search query string
   final String? query;
 
@@ -154,9 +155,9 @@ class SearchParams {
 
   /// Extra fields
   @JsonKey(includeToJson: true)
-  final Map<String, dynamic> _extra = {};
+  final Map<String, dynamic> extra;
 
-  SearchParams({
+  const SearchParams({
     this.query,
     this.page,
     this.hitsPerPage,
@@ -199,10 +200,56 @@ class SearchParams {
     this.enableABTest,
     this.enableReRanking,
     this.reRankingApplyFilter,
+    this.extra = const {},
   });
 
-  void param(String key, dynamic value) => _extra[key] = value;
-
   @internal
-  Map<String, dynamic> toJson() => _$SearchParamsToJson(this)..addAll(_extra);
+  Map<String, dynamic> toJson() => _$SearchParamsToJson(this)..addAll(extra);
+
+  @override
+  List<Object?> get props => [
+        query,
+        page,
+        hitsPerPage,
+        facets,
+        disjunctiveFacets,
+        filters,
+        ruleContexts,
+        facetFilters,
+        attributesToHighlight,
+        attributesToRetrieve,
+        attributesToSnippet,
+        highlightPostTag,
+        highlightPreTag,
+        maxFacetHits,
+        maxValuesPerFacet,
+        numericFilters,
+        optionalFilters,
+        sumOrFiltersScore,
+        tagFilters,
+        userToken,
+        analytics,
+        similarQuery,
+        sumOrFiltersScores,
+        facetingAfterDistinct,
+        sortFacetValuesBy,
+        length,
+        aroundLatLng,
+        aroundLatLngViaIP,
+        aroundRadius,
+        aroundPrecision,
+        minimumAroundRadius,
+        insideBoundingBox,
+        insidePolygon,
+        naturalLanguages,
+        personalizationImpact,
+        getRankingInfo,
+        clickAnalytics,
+        analyticsTags,
+        percentileComputation,
+        enableABTest,
+        enableReRanking,
+        reRankingApplyFilter,
+        extra,
+      ];
 }

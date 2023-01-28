@@ -311,6 +311,78 @@ extension $SearchParamsCopyWith on SearchParams {
 // JsonSerializableGenerator
 // **************************************************************************
 
+SearchParams _$SearchParamsFromJson(Map<String, dynamic> json) => SearchParams(
+      query: json['query'] as String?,
+      page: json['page'] as int?,
+      hitsPerPage: json['hitsPerPage'] as int?,
+      facets:
+          (json['facets'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      disjunctiveFacets: (json['disjunctiveFacets'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toSet(),
+      filters: json['filters'] as String?,
+      ruleContexts: (json['ruleContexts'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      facetFilters: (json['facetFilters'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      attributesToHighlight: (json['attributesToHighlight'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      attributesToRetrieve: (json['attributesToRetrieve'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      attributesToSnippet: (json['attributesToSnippet'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      highlightPostTag: json['highlightPostTag'] as String?,
+      highlightPreTag: json['highlightPreTag'] as String?,
+      maxFacetHits: json['maxFacetHits'] as int?,
+      maxValuesPerFacet: json['maxValuesPerFacet'] as int?,
+      numericFilters: (json['numericFilters'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      optionalFilters: (json['optionalFilters'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      sumOrFiltersScore: json['sumOrFiltersScore'] as bool?,
+      tagFilters: (json['tagFilters'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      userToken: json['userToken'] as String?,
+      analytics: json['analytics'] as bool?,
+      similarQuery: json['similarQuery'] as String?,
+      sumOrFiltersScores: json['sumOrFiltersScores'] as bool?,
+      facetingAfterDistinct: json['facetingAfterDistinct'] as bool?,
+      sortFacetValuesBy: json['sortFacetValuesBy'] as String?,
+      length: json['length'] as int?,
+      aroundLatLng: json['aroundLatLng'] as String?,
+      aroundLatLngViaIP: json['aroundLatLngViaIP'] as bool?,
+      aroundRadius: json['aroundRadius'] as String?,
+      aroundPrecision: json['aroundPrecision'] as int?,
+      minimumAroundRadius: json['minimumAroundRadius'] as int?,
+      insideBoundingBox: (json['insideBoundingBox'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
+      insidePolygon: (json['insidePolygon'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
+      naturalLanguages: (json['naturalLanguages'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      personalizationImpact: json['personalizationImpact'] as int?,
+      getRankingInfo: json['getRankingInfo'] as bool?,
+      clickAnalytics: json['clickAnalytics'] as bool?,
+      analyticsTags: (json['analyticsTags'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      percentileComputation: json['percentileComputation'] as bool?,
+      enableABTest: json['enableABTest'] as bool?,
+      enableReRanking: json['enableReRanking'] as bool?,
+      reRankingApplyFilter: json['reRankingApplyFilter'] as String?,
+    );
+
 Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) {
   final val = <String, dynamic>{};
 
@@ -320,8 +392,6 @@ Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) {
     }
   }
 
-  writeNotNull('stringify', instance.stringify);
-  val['hashCode'] = instance.hashCode;
   writeNotNull('query', instance.query);
   writeNotNull('page', instance.page);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
@@ -364,7 +434,5 @@ Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) {
   writeNotNull('enableABTest', instance.enableABTest);
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
-  val['extra'] = instance.extra;
-  val['props'] = instance.props;
   return val;
 }

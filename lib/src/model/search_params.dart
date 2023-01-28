@@ -1,3 +1,4 @@
+import 'package:algolia_lite/src/model/extension.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -5,7 +6,7 @@ import 'package:meta/meta.dart';
 
 part 'search_params.g.dart';
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 @CopyWith()
 class SearchParams extends Equatable {
   /// Search query string
@@ -156,7 +157,7 @@ class SearchParams extends Equatable {
   final String? reRankingApplyFilter;
 
   /// Extra fields
-  @JsonKey(includeToJson: true)
+  @ignore
   final Map<String, dynamic> extra;
 
   const SearchParams({
@@ -209,6 +210,7 @@ class SearchParams extends Equatable {
   Map<String, dynamic> toJson() => _$SearchParamsToJson(this)..addAll(extra);
 
   @override
+  @ignore
   List<Object?> get props => [
         query,
         page,

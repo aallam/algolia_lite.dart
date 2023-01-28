@@ -1,15 +1,16 @@
-import 'package:collection/collection.dart';
+import 'package:algolia_lite/src/model/search_params.dart';
+import 'package:equatable/equatable.dart';
 
 /// Represents a facet search request.
-class FacetSearchRequest extends DelegatingMap<String, dynamic> {
+class FacetSearchRequest extends Equatable {
   /// The index to query.
   final String indexName;
 
   /// Facet to search.
   final String facetName;
 
-  /// [Search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/).
-  final Map<String, dynamic> params;
+  /// Search params.
+  final SearchParams? params;
 
   /// Text to search inside the facet’s values.
   final String? facetQuery;
@@ -18,26 +19,15 @@ class FacetSearchRequest extends DelegatingMap<String, dynamic> {
   final int? maxFacetHits;
 
   /// Create a [FacetSearchRequest] instance.
-  FacetSearchRequest({
-    required String indexName,
-    required String facetName,
-    Map<String, dynamic>? params,
-    String? facetQuery,
-    int? maxFacetHits,
-  }) : this.create(
-          indexName: indexName,
-          facetName: facetName,
-          params: params ?? {},
-          facetQuery: facetQuery,
-          maxFacetHits: maxFacetHits,
-        );
-
-  /// Create a [FacetSearchRequest] instance.
-  FacetSearchRequest.create({
+  const FacetSearchRequest({
     required this.indexName,
     required this.facetName,
-    required this.params,
+    this.params,
     this.facetQuery,
     this.maxFacetHits,
-  }) : super(params);
+  });
+
+  @override
+  List<Object?> get props =>
+      [indexName, facetName, params, facetQuery, maxFacetHits];
 }

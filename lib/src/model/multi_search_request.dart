@@ -1,8 +1,8 @@
 import 'package:algolia_lite/src/model/search_request.dart';
-import 'package:collection/collection.dart';
+import 'package:equatable/equatable.dart';
 
 /// Represents a multi search request.
-class MultiSearchRequest extends DelegatingList<SearchRequest> {
+class MultiSearchRequest extends Equatable {
   /// A list of search requests.
   final List<SearchRequest> requests;
 
@@ -11,8 +11,11 @@ class MultiSearchRequest extends DelegatingList<SearchRequest> {
   final String strategy;
 
   /// Create a [MultiSearchRequest] instance.
-  MultiSearchRequest({
+  const MultiSearchRequest({
     required this.requests,
     this.strategy = 'none',
-  }) : super(requests);
+  });
+
+  @override
+  List<Object?> get props => [requests, strategy];
 }

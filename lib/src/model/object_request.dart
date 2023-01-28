@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// Represents an object search request.
-class ObjectRequest {
+class ObjectRequest extends Equatable {
   /// Name of the index containing the object
   final String indexName;
 
@@ -11,9 +13,12 @@ class ObjectRequest {
   final List<String>? attributes;
 
   /// Create a [ObjectRequest] instance.
-  ObjectRequest({
+  const ObjectRequest({
     required this.indexName,
     required this.objectID,
     this.attributes,
   });
+
+  @override
+  List<Object?> get props => [indexName, objectID, attributes];
 }

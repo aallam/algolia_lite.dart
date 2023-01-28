@@ -4,6 +4,7 @@ targets:
       json_serializable:
         options:
           include_if_null: false
+          explicit_to_json: false
       copy_with_extension_gen:
         options:
           skip_fields: true

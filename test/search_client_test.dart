@@ -8,9 +8,9 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = SearchRequest.create(
+    const req = SearchRequest(
       indexName: 'instant_search',
-      params: const SearchParams(
+      params: SearchParams(
         query: 'a',
         page: 1,
         hitsPerPage: 10,
@@ -25,9 +25,9 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = MultiSearchRequest(
+    const req = MultiSearchRequest(
       requests: [
-        SearchRequest.create(
+        SearchRequest(
           indexName: 'instant_search',
           params: SearchParams(query: 'a'),
         )
@@ -42,7 +42,7 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = FacetSearchRequest(
+    const req = FacetSearchRequest(
       indexName: 'instant_search',
       facetName: 'categories',
       facetQuery: 'a',
@@ -56,7 +56,7 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = SearchRequest('instant_search');
+    const req = SearchRequest(indexName: 'instant_search');
     final stream = client.browse(req);
     expect(stream, emitsInOrder([mayEmitMultiple(anything), emitsDone]));
   });
@@ -66,7 +66,7 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final req = ObjectRequest(indexName: 'instant_search', objectID: '6443034');
+    const req = ObjectRequest(indexName: 'instant_search', objectID: '6443034');
     final res = await client.object(req);
     expect(res.isNotEmpty, true);
   });
@@ -77,8 +77,8 @@ void main() {
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
     final reqs = [
-      ObjectRequest(indexName: 'instant_search', objectID: '6443034'),
-      ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
+      const ObjectRequest(indexName: 'instant_search', objectID: '6443034'),
+      const ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
     ];
     final res = await client.objects(reqs);
     expect(res.isNotEmpty, true);

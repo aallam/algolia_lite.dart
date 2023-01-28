@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// Algolia host.
-class Host {
+class Host extends Equatable {
   /// Host protocol (i.e. `http`, `https`)
   final String scheme;
 
@@ -9,16 +11,5 @@ class Host {
   const Host(this.url, {this.scheme = 'https'});
 
   @override
-  String toString() => 'Host{protocol: $scheme, url: $url}';
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Host &&
-          runtimeType == other.runtimeType &&
-          scheme == other.scheme &&
-          url == other.url;
-
-  @override
-  int get hashCode => scheme.hashCode ^ url.hashCode;
+  List<Object?> get props => [scheme, url];
 }

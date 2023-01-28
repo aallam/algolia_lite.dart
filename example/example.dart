@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:algolia_lite/algolia_lite.dart';
-import 'package:algolia_lite/src/model/search_params.dart';
 
 void main() async {
   /// Create search client
@@ -70,4 +71,27 @@ void main() async {
   await for (final response in stream) {
     print(response);
   }
+
+  /// Create Insights client
+  final insights = InsightsClient(
+    applicationID: 'MyApplicationID',
+    apiKey: 'MyApiKey',
+  );
+
+  /// Send Insights events
+  unawaited(
+    insights.sendEvents(
+      [
+        const InsightEvent(
+          eventType: EventType.click,
+          eventName: 'Clicked Search Result',
+          index: 'instant_search',
+          userToken: 'anonymous-xxxxxx-xx-xxx-xxxxxx',
+          queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
+          objectIDs: ['item'],
+          positions: [1],
+        )
+      ],
+    ),
+  );
 }

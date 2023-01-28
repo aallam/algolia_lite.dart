@@ -24,11 +24,15 @@ Use your search client instance to make API requests:
 <summary><strong>Search index</strong></summary>
 
 ```dart
-var request = SearchRequest.create(
+const request = SearchRequest(
   indexName: 'MyIndexName',
-  params: {'query': 'phone'},
+  params: SearchParams(
+    query: 'george clo',
+    hitsPerPage: 2,
+    getRankingInfo: true,
+  ),
 );
-var response = await client.search(request);
+final response = await client.search(request);
 ```
 </details>
 
@@ -36,13 +40,14 @@ var response = await client.search(request);
 <summary><strong>Search multiple indices</strong></summary>
 
 ```dart
-var request = MultiSearchRequest(requests: 
-  [
-    SearchRequest.create(indexName: 'MyIndexName1', params: params),
-    SearchRequest.create(indexName: 'MyIndexName2', params: params),
+const params = SearchParams(query: 'van');
+const request = MultiSearchRequest(
+  requests: [
+    SearchRequest(indexName: 'MyIndexName1', params: params),
+    SearchRequest(indexName: 'MyIndexName2', params: params),
   ],
 );
-var response = await client.multiSearch(request);
+final response = await client.multiSearch(request);
 ```
 </details>
 
@@ -50,12 +55,12 @@ var response = await client.multiSearch(request);
 <summary><strong>Search for facet values</strong></summary>
 
 ```dart
-var request = FacetSearchRequest(
+const request = FacetSearchRequest(
   indexName: 'MyIndexName',
   facetName: 'categories',
   facetQuery: 'phone',
 );
-var response = await client.facetsSearch(request);
+final response = await client.facetsSearch(request);
 ```
 </details>
 
@@ -63,20 +68,21 @@ var response = await client.facetsSearch(request);
 <summary><strong>Get object(s)</strong></summary>
 
 ```dart
-var request = ObjectRequest(
+const request = ObjectRequest(
   indexName: 'MyIndexName',
   objectID: 'MyObjectID',
   attributes: ['email', 'name'],
 );
-var objectResponse = await client.object(request);
+final response = await client.object(request);
 ```
 ```dart
-final response = await client.objects(
-    [
-      ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID1'),
-      ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID2'),
-    ],
+const request = ObjectsRequest(
+  requests: [
+    ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID1'),
+    ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID2'),
+  ],
 );
+final response = await client.objects(request);
 ```
 </details>
 
@@ -84,9 +90,9 @@ final response = await client.objects(
 <summary><strong>Browse index</strong></summary>
 
 ```dart
-var request = SearchRequest('MyIndexName');
-var stream = client.browse(request);
-await for (var response in stream) {
+const request = SearchRequest('MyIndexName');
+final stream = client.browse(request);
+await for (final response in stream) {
   print(response);
 }
 ```
@@ -107,19 +113,16 @@ final client = InsightsClient(
 <summary><strong>Send events</strong></summary>
 
 ```dart
-await client.sendEvents(
-    [
-        InsightEvent({
-        'eventType': 'click',
-        'eventName': 'Clicked Search Result',
-        'index': 'instant_search',
-        'userToken': 'anonymous-xxxxxx-xx-xxx-xxxxxx',
-        'queryID': '43b15df305339e827f0ac0bdc5ebcaa7',
-        'objectIDs': ['item'],
-        'positions': [1],
-        }),
-    ],
+const event = InsightEvent(
+    eventType: EventType.click,
+    eventName: 'Clicked Search Result',
+    index: 'instant_search',
+    userToken: 'anonymous-xxxxxx-xx-xxx-xxxxxx',
+    queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
+    objectIDs: ['item'],
+    positions: [1],
 );
+unawaited(client.sendEvents([event]));
 ```
 </details>
 

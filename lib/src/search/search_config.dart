@@ -1,8 +1,9 @@
 import 'package:algolia_lite/src/configuration.dart';
 import 'package:algolia_lite/src/host.dart';
+import 'package:equatable/equatable.dart';
 
 /// Search client default configuration.
-class SearchConfig implements ClientConfig {
+class SearchConfig extends Equatable implements ClientConfig {
   @override
   final String applicationID;
   @override
@@ -21,6 +22,9 @@ class SearchConfig implements ClientConfig {
     this.headers,
     this.timeout = const Duration(seconds: 5),
   }) : hosts = hosts ?? _defaultHosts(applicationID);
+
+  @override
+  List<Object?> get props => [applicationID, apiKey, hosts, headers, timeout];
 }
 
 Iterable<Host> _defaultHosts(String appID) => [

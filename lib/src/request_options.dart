@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 /// Extra request parameters, headers and timeout.
 /// Parameters set in the request option will override default parameter.
-class RequestOptions {
+class RequestOptions extends Equatable {
   final Map<String, String>? headers;
   final Duration? timeout;
   final Map<String, String>? queryParams;
@@ -12,6 +14,5 @@ class RequestOptions {
   });
 
   @override
-  String toString() =>
-      'RequestOptions{headers: $headers, timeout: $timeout, queryParams: $queryParams}';
+  List<Object?> get props => [headers, timeout, queryParams];
 }

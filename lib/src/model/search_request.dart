@@ -26,6 +26,9 @@ class SearchRequest extends Equatable {
   @internal
   Map<String, dynamic> toJson() => _$SearchRequestToJson(this);
 
+  static Map<String, dynamic> toJsonMap(SearchRequest request) =>
+      request.toJson();
+
   @override
   @ignore
   List<Object?> get props => [indexName, params];

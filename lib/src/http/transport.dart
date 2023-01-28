@@ -107,7 +107,7 @@ class _HttpTransport implements HttpTransport {
     final timeout = baseTimeout * (host.retryCount + 1);
     return HttpRequest(
       method: method,
-      host: host,
+      host: host.host,
       path: path,
       timeout: timeout,
       headers: requestOptions?.headers,

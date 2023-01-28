@@ -1,11 +1,14 @@
 export 'browse_response.dart';
 export 'facet_search_request.dart';
 export 'facet_search_response.dart';
+export 'insight_event.dart';
+export 'insights_request.dart';
 export 'multi_search_request.dart';
 export 'multi_search_response.dart';
 export 'object_request.dart';
 export 'object_response.dart';
 export 'objects_request.dart';
 export 'objects_response.dart';
+export 'search_params.dart';
 export 'search_request.dart';
 export 'search_response.dart';

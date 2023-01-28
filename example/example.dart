@@ -55,10 +55,12 @@ void main() async {
 
   /// Make objects request
   final objectsResponse = await client.objects(
-    [
-      const ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID1'),
-      const ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID2'),
-    ],
+    const ObjectsRequest(
+      requests: [
+        ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID1'),
+        ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID2'),
+      ],
+    ),
   );
   print(objectsResponse);
 

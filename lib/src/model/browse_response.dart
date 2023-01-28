@@ -1,12 +1,13 @@
 import 'package:algolia_lite/algolia_lite.dart';
 import 'package:algolia_lite/src/model/extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'browse_response.g.dart';
 
 /// Browse response.
 @deserializable
-class BrowseResponse extends SearchResponse {
+class BrowseResponse extends SearchResponse with EquatableMixin {
   /// Cursor indicating the location to resume browsing from.
   /// Must match the value returned by the previous call.
   final String? cursor;
@@ -45,4 +46,7 @@ class BrowseResponse extends SearchResponse {
   @internal
   factory BrowseResponse.fromJson(Map<String, dynamic> json) =>
       _$BrowseResponseFromJson(json);
+
+  @override
+  List<Object?> get props => [...super.props, cursor];
 }

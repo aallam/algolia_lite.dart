@@ -16,7 +16,10 @@ void main() {
         hitsPerPage: 10,
       ),
     );
-    final res = await client.search(req);
+    const options = RequestOptions(
+      headers: {'X-Algolia-UserToken': 'algolia-lite-dart-test'},
+    );
+    final res = await client.search(req, options);
     expect(res.query, 'a');
     expect(res.page, 1);
     expect(res.hitsPerPage, 10);
@@ -82,11 +85,13 @@ void main() {
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
-    final reqs = [
-      const ObjectRequest(indexName: 'instant_search', objectID: '6443034'),
-      const ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
-    ];
+    const reqs = ObjectsRequest(
+      requests: [
+        ObjectRequest(indexName: 'instant_search', objectID: '6443034'),
+        ObjectRequest(indexName: 'instant_search', objectID: '4863102'),
+      ],
+    );
     final res = await client.objects(reqs);
-    expect(res.isNotEmpty, true);
+    expect(res.results.isNotEmpty, true);
   });
 }

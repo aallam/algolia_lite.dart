@@ -10,7 +10,11 @@ String encodePath(String path, [Map<String, dynamic>? queryParams]) =>
     Uri(path: path, queryParameters: queryParams).path;
 
 extension SearchRequestEncode on SearchRequest {
-  String encodedParams() => Uri(queryParameters: params).query;
+  String encodedParams() => Uri(
+        queryParameters: params
+            ?.toJson()
+            .map((key, value) => MapEntry(key, value.toString())),
+      ).query;
 
   String encode([String? cursor]) {
     final encoded = encodedParams();

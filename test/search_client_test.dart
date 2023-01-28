@@ -1,21 +1,26 @@
 import 'package:algolia_lite/algolia_lite.dart';
+import 'package:algolia_lite/src/model/search_params.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Search', () async {
+  test('Single search request', () async {
     final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
     );
     final req = SearchRequest.create(
       indexName: 'instant_search',
-      params: {'query': 'a'},
+      params: SearchParams(
+        query: 'a',
+        page: 1,
+        hitsPerPage: 10,
+      ),
     );
     final res = await client.search(req);
     expect(res.isNotEmpty, true);
   });
 
-  test('MultiSearch', () async {
+  test('Multi search request', () async {
     final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
@@ -24,7 +29,7 @@ void main() {
       requests: [
         SearchRequest.create(
           indexName: 'instant_search',
-          params: {'query': 'a'},
+          params: SearchParams(query: 'a'),
         )
       ],
     );
@@ -32,7 +37,7 @@ void main() {
     expect(res.isNotEmpty, true);
   });
 
-  test('FacetSearch', () async {
+  test('Facet search request', () async {
     final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
@@ -56,7 +61,7 @@ void main() {
     expect(stream, emitsInOrder([mayEmitMultiple(anything), emitsDone]));
   });
 
-  test('Object', () async {
+  test('Object search', () async {
     final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',
@@ -66,7 +71,7 @@ void main() {
     expect(res.isNotEmpty, true);
   });
 
-  test('Objects', () async {
+  test('Objects search', () async {
     final client = SearchClient(
       applicationID: 'latency',
       apiKey: 'afc3dd66dd1293e2e2736a5a51b05c0a',

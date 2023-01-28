@@ -1,5 +1,4 @@
 import 'package:algolia_lite/algolia_lite.dart';
-import 'package:algolia_lite/src/model/search_params.dart';
 import 'package:test/test.dart';
 
 void main() {

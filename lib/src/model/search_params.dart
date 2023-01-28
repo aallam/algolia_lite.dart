@@ -1,3 +1,4 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
@@ -5,6 +6,7 @@ import 'package:meta/meta.dart';
 part 'search_params.g.dart';
 
 @JsonSerializable(createFactory: false)
+@CopyWith()
 class SearchParams extends Equatable {
   /// Search query string
   final String? query;

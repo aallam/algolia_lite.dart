@@ -10,7 +10,7 @@ void main() {
     );
     final req = SearchRequest.create(
       indexName: 'instant_search',
-      params: SearchParams(
+      params: const SearchParams(
         query: 'a',
         page: 1,
         hitsPerPage: 10,

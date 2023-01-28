@@ -4,6 +4,9 @@ import 'package:algolia_lite/src/configuration.dart';
 import 'package:algolia_lite/src/exception.dart';
 import 'package:algolia_lite/src/http/requester.dart';
 import 'package:dio/dio.dart';
+import 'package:logging/logging.dart';
+
+final Logger _logger = Logger("AlgoliaLite");
 
 /// Implementation of [Requester] using [http].
 class DioRequester implements Requester {
@@ -13,7 +16,13 @@ class DioRequester implements Requester {
             headers: _defaultHeaders(config),
             connectTimeout: config.timeout.inMilliseconds,
           ),
-        );
+        )..interceptors.add(
+            LogInterceptor(
+              requestBody: true,
+              responseBody: true,
+              logPrint: _logger.fine,
+            ),
+          );
 
   /// Inner http client.
   final Dio _client;

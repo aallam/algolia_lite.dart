@@ -1,6 +1,6 @@
 name: algolia_lite
 description: Dart API client to interact with Algolia, designed for client apps.
-version: 0.2.1
+version: 1.0.0
 repository: https://github.com/Aallam/algolia_lite_dart
 
 environment:

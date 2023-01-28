@@ -8,7 +8,7 @@ part of 'insight_event.dart';
 
 Map<String, dynamic> _$InsightEventToJson(InsightEvent instance) {
   final val = <String, dynamic>{
-    'eventType': _$EventTypeEnumMap[instance.eventType]!,
+    'eventType': _$EventTypeEnumMap[instance.eventType],
     'eventName': instance.eventName,
     'index': instance.index,
     'userToken': instance.userToken,

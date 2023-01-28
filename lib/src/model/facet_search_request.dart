@@ -1,15 +1,26 @@
-import 'package:collection/collection.dart';
+import 'package:algolia_lite/src/model/extension.dart';
+import 'package:algolia_lite/src/model/search_params.dart';
+import 'package:algolia_lite/src/search/encode.dart';
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
+
+part 'facet_search_request.g.dart';
 
 /// Represents a facet search request.
-class FacetSearchRequest extends DelegatingMap<String, dynamic> {
+@serializable
+class FacetSearchRequest extends Equatable {
   /// The index to query.
+  @ignore
   final String indexName;
 
   /// Facet to search.
+  @ignore
   final String facetName;
 
-  /// [Search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/).
-  final Map<String, dynamic> params;
+  /// Search params.
+  @JsonKey(toJson: encodeParams)
+  final SearchParams? params;
 
   /// Text to search inside the facet’s values.
   final String? facetQuery;
@@ -18,26 +29,27 @@ class FacetSearchRequest extends DelegatingMap<String, dynamic> {
   final int? maxFacetHits;
 
   /// Create a [FacetSearchRequest] instance.
-  FacetSearchRequest({
-    required String indexName,
-    required String facetName,
-    Map<String, dynamic>? params,
-    String? facetQuery,
-    int? maxFacetHits,
-  }) : this.create(
-          indexName: indexName,
-          facetName: facetName,
-          params: params ?? {},
-          facetQuery: facetQuery,
-          maxFacetHits: maxFacetHits,
-        );
-
-  /// Create a [FacetSearchRequest] instance.
-  FacetSearchRequest.create({
+  const FacetSearchRequest({
     required this.indexName,
     required this.facetName,
-    required this.params,
+    this.params,
     this.facetQuery,
     this.maxFacetHits,
-  }) : super(params);
+  });
+
+  @internal
+  Map<String, dynamic> toJson() => _$FacetSearchRequestToJson(this);
+
+  @override
+  @ignore
+  List<Object?> get props => [indexName, facetName];
+
+  @override
+  @ignore
+  // ignore: hash_and_equals
+  int get hashCode => super.hashCode;
+
+  @override
+  @ignore
+  bool? get stringify => super.stringify;
 }

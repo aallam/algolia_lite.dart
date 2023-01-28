@@ -5,6 +5,7 @@ import 'package:algolia_lite/src/exception.dart';
 import 'package:algolia_lite/src/http/requester.dart';
 import 'package:algolia_lite/src/http/stateful_host.dart';
 import 'package:algolia_lite/src/request_options.dart';
+import 'package:algolia_lite/src/version.dart';
 
 /// Component to run http requests with retry logic.
 abstract class HttpTransport {
@@ -22,11 +23,12 @@ abstract class HttpTransport {
       _HttpTransport(requester, config);
 
   /// Run an request and get a response.
-  Future<Map> request({
+  Future<Map<String, dynamic>> request({
     required String method,
     required String path,
+    Map<String, String>? queryParams,
+    dynamic body,
     RequestOptions? requestOptions,
-    String? body,
   });
 
   void dispose();
@@ -42,17 +44,19 @@ class _HttpTransport implements HttpTransport {
   final Iterable<StatefulHost> hosts;
 
   @override
-  Future<Map> request({
+  Future<Map<String, dynamic>> request({
     required String method,
     required String path,
+    Map<String, String>? queryParams,
+    dynamic body,
     RequestOptions? requestOptions,
-    String? body,
   }) async {
     final hosts = _callableHosts();
     final List errors = [];
 
     for (final host in hosts) {
-      final request = _buildRequest(host, path, method, body, requestOptions);
+      final request =
+          _buildRequest(method, host, path, queryParams, body, requestOptions);
       try {
         final response = await requester.perform(request);
         return response.body ?? const {};
@@ -87,14 +91,16 @@ class _HttpTransport implements HttpTransport {
   }
 
   HttpRequest _buildRequest(
+    String method,
     StatefulHost host,
     String path,
-    String method,
-    String? body,
+    Map<String, String>? queryParams,
+    dynamic body,
     RequestOptions? requestOptions,
   ) {
-    final Map<String, String> queryParams = {
+    final Map<String, String> params = {
       ..._defaultQueryParams(),
+      ...?queryParams,
       ...?requestOptions?.queryParams,
     };
     final baseTimeout = requestOptions?.timeout ?? config.timeout;
@@ -106,12 +112,12 @@ class _HttpTransport implements HttpTransport {
       timeout: timeout,
       headers: requestOptions?.headers,
       body: body,
-      queryParameters: queryParams,
+      queryParameters: params,
     );
   }
 
   Map<String, String> _defaultQueryParams() =>
-      const {'x-algolia-agent': 'algolia lite (0.0.1)'};
+      const {'x-algolia-agent': 'Algolia Lite for Dart ($packageVersion)'};
 
   @override
   void dispose() => requester.close();

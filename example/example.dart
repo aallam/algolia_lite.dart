@@ -1,4 +1,5 @@
 import 'package:algolia_lite/algolia_lite.dart';
+import 'package:algolia_lite/src/model/search_params.dart';
 
 void main() async {
   /// Create search client
@@ -9,20 +10,24 @@ void main() async {
 
   /// Make search request
   final searchResponse = await client.search(
-    SearchRequest('MyIndexName')
-      ..['query'] = 'george clo'
-      ..['hitsPerPage'] = 2
-      ..['getRankingInfo'] = 1,
+    const SearchRequest(
+      indexName: 'MyIndexName',
+      params: SearchParams(
+        query: 'george clo',
+        hitsPerPage: 2,
+        getRankingInfo: true,
+      ),
+    ),
   );
   print(searchResponse);
 
   /// Make multi search requests
-  final params = {'query': 'van'};
+  const params = SearchParams(query: 'van');
   final multiSearchResponse = await client.multiSearch(
-    MultiSearchRequest(
+    const MultiSearchRequest(
       requests: [
-        SearchRequest.create(indexName: 'MyIndexName1', params: params),
-        SearchRequest.create(indexName: 'MyIndexName2', params: params),
+        SearchRequest(indexName: 'MyIndexName1', params: params),
+        SearchRequest(indexName: 'MyIndexName2', params: params),
       ],
     ),
   );
@@ -30,7 +35,7 @@ void main() async {
 
   /// Make facet search
   final facetsSearchResponse = await client.facetsSearch(
-    FacetSearchRequest(
+    const FacetSearchRequest(
       indexName: 'MyIndexName',
       facetName: 'categories',
       facetQuery: 'phone',
@@ -40,7 +45,7 @@ void main() async {
 
   /// Make object request
   final objectResponse = await client.object(
-    ObjectRequest(
+    const ObjectRequest(
       indexName: 'MyIndexName',
       objectID: 'MyObjectID',
       attributes: ['email', 'name'],
@@ -50,15 +55,17 @@ void main() async {
 
   /// Make objects request
   final objectsResponse = await client.objects(
-    [
-      ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID1'),
-      ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID2'),
-    ],
+    const ObjectsRequest(
+      requests: [
+        ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID1'),
+        ObjectRequest(indexName: 'MyIndexName1', objectID: 'MyObjectID2'),
+      ],
+    ),
   );
   print(objectsResponse);
 
   /// Make browse request
-  final request = SearchRequest('MyIndexName');
+  const request = SearchRequest(indexName: 'MyIndexName');
   final stream = client.browse(request);
   await for (final response in stream) {
     print(response);

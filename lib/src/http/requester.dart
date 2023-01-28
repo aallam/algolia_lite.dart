@@ -30,7 +30,7 @@ class HttpRequest {
   final String path;
   final Duration timeout;
   final Map<String, String>? headers;
-  final String? body;
+  final dynamic body;
   final Map<String, String> queryParameters;
 
   @override
@@ -42,7 +42,7 @@ class HttpResponse {
   HttpResponse(this.statusCode, this.body);
 
   final int? statusCode;
-  final Map? body;
+  final Map<String, dynamic>? body;
 
   @override
   String toString() {

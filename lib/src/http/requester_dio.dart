@@ -28,9 +28,9 @@ class DioRequester implements Requester {
   final Dio _client;
 
   @override
-  Future<HttpResponse> perform(HttpRequest request) {
+  Future<HttpResponse> perform(HttpRequest request) async {
     try {
-      return execute(request);
+      return await execute(request);
     } on DioError catch (e) {
       switch (e.type) {
         case DioErrorType.connectTimeout:

@@ -1,4 +1,4 @@
-import 'package:algolia_lite/src/host.dart';
+import 'package:algolia_lite/src/core/core.dart';
 
 class StatefulHost {
   StatefulHost(this.host);
@@ -6,7 +6,7 @@ class StatefulHost {
   StatefulHost.create(
     String url, {
     String scheme = 'https',
-  }) : this(Host(url, scheme: scheme));
+  }) : this(Host(url: url, scheme: scheme));
 
   final Host host;
   bool isUp = true;

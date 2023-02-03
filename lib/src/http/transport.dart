@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:algolia_lite/src/configuration.dart';
-import 'package:algolia_lite/src/exception.dart';
+import 'package:algolia_lite/src/core/core.dart';
 import 'package:algolia_lite/src/http/requester.dart';
 import 'package:algolia_lite/src/http/stateful_host.dart';
-import 'package:algolia_lite/src/request_options.dart';
 import 'package:algolia_lite/src/version.dart';
 
 /// Component to run http requests with retry logic.

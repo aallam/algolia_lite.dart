@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:algolia_lite/src/core/core.dart';
 import 'package:algolia_lite/src/model/models.dart';
-import 'package:algolia_lite/src/request_options.dart';
 import 'package:algolia_lite/src/search/search.dart';
 import 'package:algolia_lite/src/search/search_api_client.dart';
 import 'package:meta/meta.dart';

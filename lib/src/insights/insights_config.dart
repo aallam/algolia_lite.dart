@@ -1,5 +1,4 @@
-import 'package:algolia_lite/src/configuration.dart';
-import 'package:algolia_lite/src/host.dart';
+import 'package:algolia_lite/src/core/core.dart';
 
 class InsightsConfig implements ClientConfig {
   @override
@@ -19,5 +18,5 @@ class InsightsConfig implements ClientConfig {
     Iterable<Host>? hosts,
     this.headers,
     this.timeout = const Duration(seconds: 5),
-  }) : hosts = hosts ?? const [Host('insights.algolia.io')];
+  }) : hosts = hosts ?? const [Host(url: 'insights.algolia.io')];
 }

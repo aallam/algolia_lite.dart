@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:algolia_lite/src/configuration.dart';
-import 'package:algolia_lite/src/exception.dart';
+import 'package:algolia_lite/src/core/core.dart';
 import 'package:algolia_lite/src/http/requester.dart';
 import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';

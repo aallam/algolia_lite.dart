@@ -34,4 +34,4 @@ extension ObjectRequestEncode on ObjectRequest {
 
 /// Convert JSON to a list of object responses.
 Iterable<ObjectResponse> objectsFromJson(List<dynamic> items) =>
-    items.map((item) => ObjectResponse(item as Map<String, dynamic>));
+    items.map((item) => ObjectResponse(json: item as Map<String, dynamic>));

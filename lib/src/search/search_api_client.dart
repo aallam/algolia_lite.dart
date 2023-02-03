@@ -1,6 +1,6 @@
+import 'package:algolia_lite/src/core/core.dart';
 import 'package:algolia_lite/src/http/transport.dart';
 import 'package:algolia_lite/src/model/models.dart';
-import 'package:algolia_lite/src/request_options.dart';
 import 'package:algolia_lite/src/search/encode.dart';
 import 'package:algolia_lite/src/search/search.dart';
 
@@ -34,7 +34,7 @@ class SearchApiClient implements SearchClient {
       body: request.toJson(),
       requestOptions: requestOptions,
     );
-    return MultiSearchResponse(json);
+    return MultiSearchResponse(json: json);
   }
 
   @override
@@ -48,7 +48,7 @@ class SearchApiClient implements SearchClient {
       body: request.toJson(),
       requestOptions: requestOptions,
     );
-    return FacetSearchResponse(json);
+    return FacetSearchResponse(json: json);
   }
 
   @override
@@ -82,7 +82,7 @@ class SearchApiClient implements SearchClient {
       queryParams: request.toQueryParams(),
       requestOptions: requestOptions,
     );
-    return ObjectResponse(json);
+    return ObjectResponse(json: json);
   }
 
   @override

@@ -20,3 +20,4 @@ dev_dependencies:
   json_serializable: ^6.6.0
   lint: ^2.0.1
   test: ^1.16.0
+  ulid4d: ^2.0.0

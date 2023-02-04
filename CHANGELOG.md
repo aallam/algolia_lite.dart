@@ -1,3 +1,12 @@
+# 1.1.0
+
+### Fixed
+- internal retry strategy
+
+### Changed
+- Refactor requests and responses data classes
+
+
 ## 1.0.0
 
 ### Added

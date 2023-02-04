@@ -7,7 +7,8 @@ part of 'facet_search_request.dart';
 // **************************************************************************
 
 Map<String, dynamic> _$$_FacetSearchRequestToJson(
-    _$_FacetSearchRequest instance) {
+  _$_FacetSearchRequest instance,
+) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

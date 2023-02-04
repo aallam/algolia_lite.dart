@@ -1,1 +1,8 @@
 include: package:lint/package.yaml
+
+analyzer:
+  exclude:
+    - '**.freezed.dart'
+    - '**.g.dart'
+    - 'test/**'
+    - 'example/**'

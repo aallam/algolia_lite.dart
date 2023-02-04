@@ -24,7 +24,9 @@ Map<String, dynamic> _$$_SearchParamsToJson(_$_SearchParams instance) {
   writeNotNull('ruleContexts', instance.ruleContexts?.toList());
   writeNotNull('facetFilters', instance.facetFilters?.toList());
   writeNotNull(
-      'attributesToHighlight', instance.attributesToHighlight?.toList());
+    'attributesToHighlight',
+    instance.attributesToHighlight?.toList(),
+  );
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve?.toList());
   writeNotNull('attributesToSnippet', instance.attributesToSnippet?.toList());
   writeNotNull('highlightPostTag', instance.highlightPostTag);

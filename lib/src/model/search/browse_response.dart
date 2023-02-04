@@ -37,6 +37,7 @@ class BrowseResponse with _$BrowseResponse {
     Map<String, int>? facets,
 
     /// Statistics for numerical facets.
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'facets_stats') Map<String, int>? facetsStats,
 
     /// The number of hits per page.

@@ -14,7 +14,7 @@ class ObjectsResponse with _$ObjectsResponse {
   const factory ObjectsResponse({
     /// List of objects.
     @JsonKey(fromJson: objectsFromJson)
-    required Iterable<ObjectResponse> results,
+        required Iterable<ObjectResponse> results,
   }) = _ObjectsResponse;
 
   @internal

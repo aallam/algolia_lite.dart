@@ -7,7 +7,8 @@ part of 'multi_search_request.dart';
 // **************************************************************************
 
 Map<String, dynamic> _$$_MultiSearchRequestToJson(
-        _$_MultiSearchRequest instance) =>
+  _$_MultiSearchRequest instance,
+) =>
     <String, dynamic>{
       'requests': requestsToJson(instance.requests),
       'strategy': instance.strategy,

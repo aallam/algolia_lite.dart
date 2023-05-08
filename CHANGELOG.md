@@ -1,3 +1,8 @@
+# 1.2.0
+
+### Changed
+- Update Dio v5 (#3)
+
 # 1.1.0
 
 ### Fixed

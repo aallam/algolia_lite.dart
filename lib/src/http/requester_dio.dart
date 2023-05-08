@@ -13,7 +13,7 @@ class DioRequester implements Requester {
       : _client = Dio(
           BaseOptions(
             headers: _defaultHeaders(config),
-            connectTimeout: config.timeout.inMilliseconds,
+            connectTimeout: config.timeout,
           ),
         )..interceptors.add(
             LogInterceptor(
@@ -32,14 +32,16 @@ class DioRequester implements Requester {
       return await execute(request);
     } on DioError catch (e) {
       switch (e.type) {
-        case DioErrorType.connectTimeout:
+        case DioErrorType.connectionTimeout:
         case DioErrorType.sendTimeout:
         case DioErrorType.receiveTimeout:
           throw AlgoliaTimeoutException(e);
-        case DioErrorType.response:
+        case DioErrorType.badResponse:
           throw AlgoliaApiException(e.response?.statusCode ?? 0, e.error);
+        case DioErrorType.badCertificate:
         case DioErrorType.cancel:
-        case DioErrorType.other:
+        case DioErrorType.connectionError:
+        case DioErrorType.unknown:
           throw AlgoliaIOException(e);
       }
     }
@@ -51,7 +53,7 @@ class DioRequester implements Requester {
       data: request.body,
       options: Options(
         method: request.method,
-        sendTimeout: request.timeout.inMilliseconds,
+        sendTimeout: request.timeout,
       ),
     );
     return HttpResponse(response.statusCode, response.data);
